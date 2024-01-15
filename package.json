@@ -18,6 +18,7 @@
     "type": "module",
     "scripts": {
         "start": "rm -rf dist/ && tsc && pm2 start dist/socialbots.js",
+        "start-dev": "rm -rf dist/ && tsc && node dist/socialbots.js",
         "build": "rm -rf dist/ && tsc"
     },
     "dependencies": {
