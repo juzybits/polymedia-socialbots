@@ -43,7 +43,7 @@ export class TurbosEventFetcher {
         this.eventCursor = null;
     }
 
-    public async fetchEvents(): Promise<TradeEvent[]> {
+    public async fetchTradeEvents(): Promise<TradeEvent[]> {
         try {
             if (!this.eventCursor) { // 1st run
                 await this.fetchLastEventAndUpdateCursor();
@@ -57,9 +57,18 @@ export class TurbosEventFetcher {
         }
     }
 
+    public formatTradeEvent(e: TradeEvent): string {
+        return `
+--- ${e.kind} ---
+amountA: ${formatNumber(e.amountA/this.dividerA)}
+amountB: ${formatNumber(e.amountB/this.dividerB)}
+sender: ${e.sender}
+txn: https://suiexplorer.com/txblock/${e.txn}?network=mainnet`;
+    }
+
     private async fetchLastEventAndUpdateCursor(): Promise<void>
     {
-        // console.debug(`--- [TurbosEventFetcher] fetchLastEventAndUpdateCursor()`);
+        console.debug(`--- [TurbosEventFetcher] fetchLastEventAndUpdateCursor()`);
 
         // fetch last event
         const suiEvents = await this.suiClient.queryEvents({
@@ -74,7 +83,7 @@ export class TurbosEventFetcher {
         } else {
             this.eventCursor = suiEvents.nextCursor;
             // this.eventCursor = {
-            //     txDigest: '8zNnZNSuMD5y9sLn8EBNtppmR4c1AsG8ipt6yN8mzKQv',
+            //     txDigest: '3TqbCXKaNHDNvQatYas2D4cx2rqfVUhNtA3kPEK2JXUN',
             //     eventSeq: '0',
             // }
         }
@@ -82,7 +91,7 @@ export class TurbosEventFetcher {
 
     private async fetchEventsFromCursor(): Promise<TradeEvent[]>
     {
-        // console.debug(`--- [TurbosEventFetcher] fetchEventsFromCursor()`);
+        console.debug(`--- [TurbosEventFetcher] fetchEventsFromCursor()`);
 
         // fetch events from cursor
         const suiEvents = await this.suiClient.queryEvents({
@@ -115,14 +124,6 @@ export class TurbosEventFetcher {
                 date: new Date(Number(suiEvent.timestampMs)),
             };
             tradeEvents.push(tradeEvent);
-            console.debug(
-                tradeEvent.date,
-                tradeEvent.sender.slice(-6),
-                tradeEvent.kind,
-                `https://suiexplorer.com/txblock/${tradeEvent.txn}?network=mainnet`,
-                formatNumber(tradeEvent.amountA/this.dividerA),
-                formatNumber(tradeEvent.amountB/this.dividerB),
-            );
         }
         // console.debug('suiEvents.data.length:', suiEvents.data.length)
         // console.debug('hasNextPage:', suiEvents.hasNextPage);
