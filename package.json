@@ -21,7 +21,8 @@
         "build": "rm -rf dist/ && tsc"
     },
     "dependencies": {
-        "@mysten/sui.js": "latest"
+        "@mysten/sui.js": "latest",
+        "@polymedia/suits": "latest"
     },
     "devDependencies": {
         "@types/node": "latest",

@@ -1,5 +1,5 @@
 import { EventId, SuiClient, getFullnodeUrl } from '@mysten/sui.js/client';
-import { sleep } from './utils.js';
+import { sleep } from '@polymedia/suits';
 
 export type TradeEvent = {
     txn: string;
