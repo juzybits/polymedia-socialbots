@@ -33,3 +33,9 @@ pm2 logs watch-trades
 
 pm2 stop watch-trades
 ```
+
+## Adding the bots
+
+### Discord
+
+https://discord.com/api/oauth2/authorize?client_id=1197621113585410078&permissions=2048&scope=bot

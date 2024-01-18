@@ -1,3 +1,3 @@
 export interface Bot {
-    sendMsg(msg: string): boolean;
+    sendMessage(message: string): Promise<boolean>;
 }
