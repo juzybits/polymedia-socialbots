@@ -1,6 +1,8 @@
 import { EventId, SuiClient, getFullnodeUrl } from '@mysten/sui.js/client';
 import { sleep } from '@polymedia/suits';
 
+const TURBOS_SWAP_EVENT = '0x91bfbc386a41afcfd9b2533058d7e915a1d3829089cc268ff4333d54d6339ca1::pool::SwapEvent';
+
 export type TradeEvent = {
     txn: string;
     sender: string;
@@ -26,15 +28,13 @@ type TurbosSwapEventData = {
 }
 
 export class TurbosEventFetcher {
-    private eventType: string;
     private poolId: string;
     private suiClient: SuiClient;
     private eventCursor: EventId|null;
     private rateLimitDelay = 334; // how long to sleep between RPC requests, in milliseconds
 
-    constructor(eventType: string, poolId: string) {
+    constructor(poolId: string) {
         this.eventCursor = null;
-        this.eventType = eventType;
         this.poolId = poolId;
         this.suiClient = new SuiClient({ url: getFullnodeUrl('mainnet')});
     }
@@ -59,7 +59,7 @@ export class TurbosEventFetcher {
 
         // fetch last event
         const suiEvents = await this.suiClient.queryEvents({
-            query: { MoveEventType: this.eventType },
+            query: { MoveEventType: TURBOS_SWAP_EVENT },
             limit: 1,
             order: 'descending',
         });
@@ -82,7 +82,7 @@ export class TurbosEventFetcher {
 
         // fetch events from cursor
         const suiEvents = await this.suiClient.queryEvents({
-            query: { MoveEventType: this.eventType },
+            query: { MoveEventType: TURBOS_SWAP_EVENT },
             cursor: this.eventCursor,
             order: 'ascending',
             // limit: 10,
