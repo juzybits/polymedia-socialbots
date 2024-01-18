@@ -1,16 +1,21 @@
-import { DISCORD_BOT_TOKEN } from './.auth.js';
-import { DISCORD_CHANNEL_ID } from './.config.js';
 import { Bot } from './types.js';
 
-const URL_SEND_MESSAGE = `https://discord.com/api/v10/channels/${DISCORD_CHANNEL_ID}/messages`;
+export class BotDiscord implements Bot
+{
+    private botToken: string;
+    private urlSendMessage: string;
 
-export class BotDiscord implements Bot {
+    constructor(botToken: string, channelId: string) {
+        this.botToken = botToken;
+        this.urlSendMessage = `https://discord.com/api/v10/channels/${channelId}/messages`;
+    }
+
     public async sendMessage(message: string): Promise<boolean> {
         try {
-            const response = await fetch(URL_SEND_MESSAGE, {
+            const response = await fetch(this.urlSendMessage, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bot ${DISCORD_BOT_TOKEN}`,
+                    'Authorization': `Bot ${this.botToken}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ content: message })
