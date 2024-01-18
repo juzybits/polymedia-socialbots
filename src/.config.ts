@@ -12,6 +12,14 @@ export const TURBOS = {
      */
     POOL_ID: '0xbd85f61a1b755b6034c62f16938d6da7c85941705d9d10aa1843b809b0e35582', // FUD/SUI
     /**
+     * The 1st pair in the pool.
+     */
+    TICKER_A: 'FUD',
+    /**
+     * The 2nd pair in the pool.
+     */
+    TICKER_B: 'SUI',
+    /**
      * The amount of decimals for the 1st pair in the pool.
      */
     DECIMALS_A: 5, // FUD
@@ -20,7 +28,6 @@ export const TURBOS = {
      */
     DECIMALS_B: 9, // SUI
 };
-
 
 /**
  * How long to delay between socialbots.ts executions (fetch Turbos events and send bot messages).

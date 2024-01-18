@@ -29,16 +29,12 @@ type TurbosSwapEventData = {
 
 export class TurbosEventFetcher {
     private poolId: string;
-    private dividerA: number;
-    private dividerB: number;
     private suiClient: SuiClient;
     private eventCursor: EventId|null;
     private rateLimitDelay = 334; // how long to sleep between RPC requests, in milliseconds
 
-    constructor(poolId: string, decimalsA: number, decimalsB: number) {
+    constructor(poolId: string) {
         this.poolId = poolId;
-        this.dividerA = 10 ** decimalsA;
-        this.dividerB = 10 ** decimalsB;
         this.suiClient = new SuiClient({ url: getFullnodeUrl('mainnet')});
         this.eventCursor = null;
     }
@@ -55,15 +51,6 @@ export class TurbosEventFetcher {
             console.error(`[TurbosEventFetcher] ${error}`);
             return [];
         }
-    }
-
-    public formatTradeEvent(e: TradeEvent): string {
-        return `
---- ${e.kind} ---
-amountA: ${formatNumber(e.amountA/this.dividerA)}
-amountB: ${formatNumber(e.amountB/this.dividerB)}
-sender: ${e.sender}
-txn: https://suiexplorer.com/txblock/${e.txn}?network=mainnet`;
     }
 
     private async fetchLastEventAndUpdateCursor(): Promise<void>
