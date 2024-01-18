@@ -16,6 +16,8 @@
         "bots"
     ],
     "scripts": {
+        "start-bot-discord": "rm -rf dist/ && tsc && pm2 start dist/bot-discord.js",
+        "start-bot-discord-dev": "rm -rf dist/ && tsc && node dist/bot-discord.js",
         "start-watch-trades": "rm -rf dist/ && tsc && pm2 start dist/watch-trades.js",
         "start-watch-trades-dev": "rm -rf dist/ && tsc && node dist/watch-trades.js",
         "build": "rm -rf dist/ && tsc"
