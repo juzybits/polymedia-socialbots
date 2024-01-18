@@ -1,8 +1,8 @@
 import { DISCORD_BOT_TOKEN } from './.auth.js';
+import { DISCORD_CHANNEL_ID } from './.config.js';
 import { Bot } from './types.js';
 
-const CHANNEL_ID = '';
-const URL_SEND_MESSAGE = `https://discord.com/api/v10/channels/${CHANNEL_ID}/messages`;
+const URL_SEND_MESSAGE = `https://discord.com/api/v10/channels/${DISCORD_CHANNEL_ID}/messages`;
 
 export class BotDiscord implements Bot {
     public async sendMessage(message: string): Promise<boolean> {
