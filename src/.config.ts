@@ -4,18 +4,25 @@
 export const DISCORD_CHANNEL_ID = '1197639273864777798'; // Polymedia #fud-trades
 
 /**
- * How often to fetch Turbos swap events from the RPC.
+ * Configuration for TurbosEventFetcher.
  */
-export const TURBOS_WATCH_FREQUENCY = 5_000;
+export const TURBOS = {
+    /**
+     * The Turbos Finance pool we want to watch.
+     */
+    POOL_ID: '0xbd85f61a1b755b6034c62f16938d6da7c85941705d9d10aa1843b809b0e35582', // FUD/SUI
+    /**
+     * The amount of decimals for the 1st pair in the pool.
+     */
+    DECIMALS_A: 5, // FUD
+    /**
+     * The amount of decimals for the 2nd pair in the pool.
+     */
+    DECIMALS_B: 9, // SUI
+};
+
+
 /**
- * The Turbos Finance pool we want to watch.
+ * How long to delay between socialbots.ts executions (fetch Turbos events and send bot messages).
  */
-export const TURBOS_POOL_ID = '0xbd85f61a1b755b6034c62f16938d6da7c85941705d9d10aa1843b809b0e35582'; // FUD/SUI
-/**
- * The amount of decimals for the 1st pair in the pool.
- */
-export const TURBOS_DECIMALS_A = 5; // FUD
-/**
- * The amount of decimals for the 2nd pair in the pool.
- */
-export const TURBOS_DECIMALS_B = 9; // SUI
+export const LOOP_DELAY = 5_000;

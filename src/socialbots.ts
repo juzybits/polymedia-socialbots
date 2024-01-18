@@ -1,16 +1,10 @@
 import { sleep } from '@polymedia/suits';
 import { DISCORD_BOT_TOKEN } from './.auth.js';
-import {
-    DISCORD_CHANNEL_ID,
-    TURBOS_DECIMALS_A,
-    TURBOS_DECIMALS_B,
-    TURBOS_POOL_ID,
-    TURBOS_WATCH_FREQUENCY
-} from './.config.js';
+import { DISCORD_CHANNEL_ID, LOOP_DELAY, TURBOS } from './.config.js';
 import { BotDiscord } from './BotDiscord.js';
 import { TurbosEventFetcher } from './TurbosEventFetcher.js';
 
-const eventFetcher = new TurbosEventFetcher(TURBOS_POOL_ID, TURBOS_DECIMALS_A, TURBOS_DECIMALS_B);
+const eventFetcher = new TurbosEventFetcher(TURBOS.POOL_ID, TURBOS.DECIMALS_A, TURBOS.DECIMALS_B);
 const botDiscord = new BotDiscord(DISCORD_BOT_TOKEN, DISCORD_CHANNEL_ID);
 
 async function main() {
@@ -25,10 +19,10 @@ async function main() {
 
 (async () => {
     console.log('Starting...');
-    console.log(`TURBOS_WATCH_FREQUENCY: ${TURBOS_WATCH_FREQUENCY}`);
-    console.log(`TURBOS_POOL_ID: ${TURBOS_POOL_ID}\n`);
+    console.log(`LOOP_DELAY: ${LOOP_DELAY}`);
+    console.log(`TURBOS.POOL_ID: ${TURBOS.POOL_ID}\n`);
     while (true) {
         await main();
-        await sleep(TURBOS_WATCH_FREQUENCY);
+        await sleep(LOOP_DELAY);
     }
 })();
