@@ -18,11 +18,13 @@ cd polymedia-commando
 pnpm install
 ```
 
-Create and modify `.auth.js`:
+Create and modify `src/.auth.ts`:
 
 ```
 cp src/.auth.example.ts src/.auth.ts
 ```
+
+Modify `src/.config.ts`.
 
 ## Usage
 ```

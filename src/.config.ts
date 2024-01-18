@@ -7,8 +7,15 @@ export const DISCORD_CHANNEL_ID = '1197639273864777798'; // Polymedia #fud-trade
  * How often to fetch Turbos swap events from the RPC.
  */
 export const TURBOS_WATCH_FREQUENCY = 5_000;
-
 /**
  * The Turbos Finance pool we want to watch.
  */
-export const TURBOS_POOL_ID = '0xbd85f61a1b755b6034c62f16938d6da7c85941705d9d10aa1843b809b0e35582'; // FUD
+export const TURBOS_POOL_ID = '0xbd85f61a1b755b6034c62f16938d6da7c85941705d9d10aa1843b809b0e35582'; // FUD/SUI
+/**
+ * The amount of decimals for the 1st pair in the pool.
+ */
+export const TURBOS_DECIMALS_A = 5; // FUD
+/**
+ * The amount of decimals for the 2nd pair in the pool.
+ */
+export const TURBOS_DECIMALS_B = 9; // SUI

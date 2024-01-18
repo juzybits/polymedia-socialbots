@@ -1,5 +1,5 @@
 import { EventId, SuiClient, getFullnodeUrl } from '@mysten/sui.js/client';
-import { sleep } from '@polymedia/suits';
+import { formatNumber, sleep } from '@polymedia/suits';
 
 const TURBOS_SWAP_EVENT = '0x91bfbc386a41afcfd9b2533058d7e915a1d3829089cc268ff4333d54d6339ca1::pool::SwapEvent';
 
@@ -29,14 +29,18 @@ type TurbosSwapEventData = {
 
 export class TurbosEventFetcher {
     private poolId: string;
+    private dividerA: number;
+    private dividerB: number;
     private suiClient: SuiClient;
     private eventCursor: EventId|null;
     private rateLimitDelay = 334; // how long to sleep between RPC requests, in milliseconds
 
-    constructor(poolId: string) {
-        this.eventCursor = null;
+    constructor(poolId: string, decimalsA: number, decimalsB: number) {
         this.poolId = poolId;
+        this.dividerA = 10 ** decimalsA;
+        this.dividerB = 10 ** decimalsB;
         this.suiClient = new SuiClient({ url: getFullnodeUrl('mainnet')});
+        this.eventCursor = null;
     }
 
     public async fetchEvents(): Promise<TradeEvent[]> {
@@ -55,7 +59,7 @@ export class TurbosEventFetcher {
 
     private async fetchLastEventAndUpdateCursor(): Promise<void>
     {
-        console.debug(`--- [TurbosEventFetcher] fetchLastEventAndUpdateCursor()`);
+        // console.debug(`--- [TurbosEventFetcher] fetchLastEventAndUpdateCursor()`);
 
         // fetch last event
         const suiEvents = await this.suiClient.queryEvents({
@@ -70,7 +74,7 @@ export class TurbosEventFetcher {
         } else {
             this.eventCursor = suiEvents.nextCursor;
             // this.eventCursor = {
-            //     txDigest: 'H9UHHFt2HrhprSu3aVrJSZETHkHpbLPJ5QcdmjULzz7p', // Jan 16, 02:15 GMT
+            //     txDigest: '8zNnZNSuMD5y9sLn8EBNtppmR4c1AsG8ipt6yN8mzKQv',
             //     eventSeq: '0',
             // }
         }
@@ -78,7 +82,7 @@ export class TurbosEventFetcher {
 
     private async fetchEventsFromCursor(): Promise<TradeEvent[]>
     {
-        console.debug(`--- [TurbosEventFetcher] fetchEventsFromCursor()`);
+        // console.debug(`--- [TurbosEventFetcher] fetchEventsFromCursor()`);
 
         // fetch events from cursor
         const suiEvents = await this.suiClient.queryEvents({
@@ -116,17 +120,17 @@ export class TurbosEventFetcher {
                 tradeEvent.sender.slice(-6),
                 tradeEvent.kind,
                 `https://suiexplorer.com/txblock/${tradeEvent.txn}?network=mainnet`,
-                Math.trunc(tradeEvent.amountA/100_000).toLocaleString('en-US'),
-                Math.trunc(tradeEvent.amountB/1_000_000_000).toLocaleString('en-US'),
+                formatNumber(tradeEvent.amountA/this.dividerA),
+                formatNumber(tradeEvent.amountB/this.dividerB),
             );
         }
-        console.debug('suiEvents.data.length:', suiEvents.data.length)
-        console.debug('hasNextPage:', suiEvents.hasNextPage);
-        console.debug('nextCursor:', suiEvents.nextCursor ? suiEvents.nextCursor.txDigest : 'none');
+        // console.debug('suiEvents.data.length:', suiEvents.data.length)
+        // console.debug('hasNextPage:', suiEvents.hasNextPage);
+        // console.debug('nextCursor:', suiEvents.nextCursor ? suiEvents.nextCursor.txDigest : 'none');
 
         // call this function recursively if there's newer events that didn't fit in the page
         if (suiEvents.hasNextPage) {
-            console.debug(`[TurbosEventFetcher] has next page, will fetching recursively`);
+            // console.debug(`[TurbosEventFetcher] has next page, will fetching recursively`);
             await sleep(this.rateLimitDelay);
             const nextEvents = await this.fetchEventsFromCursor();
             tradeEvents.push(...nextEvents);

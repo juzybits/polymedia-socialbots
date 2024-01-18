@@ -1,8 +1,13 @@
 import { sleep } from '@polymedia/suits';
 import { TurbosEventFetcher } from './TurbosEventFetcher.js';
-import { TURBOS_POOL_ID, TURBOS_WATCH_FREQUENCY } from './.config.js';
+import {
+    TURBOS_DECIMALS_A,
+    TURBOS_DECIMALS_B,
+    TURBOS_POOL_ID,
+    TURBOS_WATCH_FREQUENCY
+} from './.config.js';
 
-const eventFetcher = new TurbosEventFetcher(TURBOS_POOL_ID);
+const eventFetcher = new TurbosEventFetcher(TURBOS_POOL_ID, TURBOS_DECIMALS_A, TURBOS_DECIMALS_B);
 
 async function main() {
     const events = await eventFetcher.fetchEvents();
@@ -10,7 +15,7 @@ async function main() {
 }
 
 (async () => {
-    console.log('Starting watch-trades...');
+    console.log('Starting...');
     console.log(`TURBOS_WATCH_FREQUENCY: ${TURBOS_WATCH_FREQUENCY}`);
     console.log(`TURBOS_POOL_ID: ${TURBOS_POOL_ID}\n`);
     while (true) {
