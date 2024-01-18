@@ -18,7 +18,10 @@ export class BotDiscord implements Bot
                     'Authorization': `Bot ${this.botToken}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ content: message })
+                body: JSON.stringify({
+                    content: message,
+                    flags: 1 << 2, // SUPPRESS_EMBEDS
+                })
             });
 
             if (!response.ok) {
