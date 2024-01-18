@@ -15,10 +15,9 @@
         "social",
         "bots"
     ],
-    "type": "module",
     "scripts": {
-        "start": "rm -rf dist/ && tsc && pm2 start dist/socialbots.js",
-        "start-dev": "rm -rf dist/ && tsc && node dist/socialbots.js",
+        "start-watch-trades": "rm -rf dist/ && tsc && pm2 start dist/watch-trades.js",
+        "start-watch-trades-dev": "rm -rf dist/ && tsc && node dist/watch-trades.js",
         "build": "rm -rf dist/ && tsc"
     },
     "dependencies": {
@@ -27,5 +26,7 @@
     "devDependencies": {
         "@types/node": "latest",
         "typescript": "latest"
-    }
+    },
+    "type": "module",
+    "sideEffects": false
 }
