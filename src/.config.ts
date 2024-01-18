@@ -1,7 +1,11 @@
+const isProd = process.env.NODE_ENV === 'prod';
+
 /**
  * The channel where BotDiscord should send messages.
  */
-export const DISCORD_CHANNEL_ID = '1197639273864777798'; // Polymedia #fud-trades
+export const DISCORD_CHANNEL_ID = isProd
+    ? 'TODO'
+    : '1197639273864777798'; // Polymedia #fud-trades
 
 /**
  * Configuration for TurbosEventFetcher.
