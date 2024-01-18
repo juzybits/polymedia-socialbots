@@ -26,12 +26,12 @@ cp src/.auth.example.ts src/.auth.ts
 
 ## Usage
 ```
-pnpm start-watch-trades # production, runs with 'pm2'
-pnpm start-watch-trades-dev # develompent, runs with 'node'
+pnpm start-socialbots # production, runs with 'pm2'
+pnpm start-socialbots-dev # develompent, runs with 'node'
 
-pm2 logs watch-trades
+pm2 logs socialbots
 
-pm2 stop watch-trades
+pm2 stop socialbots
 ```
 
 ## Adding the bots
