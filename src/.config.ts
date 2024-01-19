@@ -26,7 +26,7 @@ export const TURBOS = {
     /** The amount of decimals for the 2nd pair in the pool. */
     DECIMALS_B: 9,
     /** To fetch swap events starting at an older cursor (handy for development). */
-    NEXT_CURSOR: isProd ? null : { eventSeq: '0', txDigest: '2tVSSpmeu27bxvxV9iZ9JfHDwz9GPWDMLCDnq7J8z9nq' },
+    NEXT_CURSOR: isProd ? null : { eventSeq: '0', txDigest: '9SMtYBiTSUipcS2SAjMf2NJ3YUgEsZhBamgkrCTkC62B' },
 };
 
 /**
