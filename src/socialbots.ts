@@ -1,16 +1,23 @@
-import { formatNumber, sleep } from '@polymedia/suits';
+import { sleep } from '@polymedia/suits';
 import { DISCORD_BOT_TOKEN } from './.auth.js';
 import { DISCORD_CHANNEL_ID, LOOP_DELAY, TURBOS } from './.config.js';
 import { BotDiscord } from './BotDiscord.js';
-import { TurbosTrade, TurbosTradeFetcher } from './TurbosTradeFetcher.js';
+import { TurbosTradeFetcher } from './TurbosTradeFetcher.js';
+import { TurbosTradeFormatter } from './TurbosTradeFormatter.js';
 
-const eventFetcher = new TurbosTradeFetcher(TURBOS.POOL_ID);
+const turbosTradeFetcher = new TurbosTradeFetcher(TURBOS.POOL_ID);
+const turbosTradeFormatter = new TurbosTradeFormatter(
+    TURBOS.TICKER_A,
+    TURBOS.TICKER_B,
+    TURBOS.DECIMALS_A,
+    TURBOS.DECIMALS_B
+);
 const botDiscord = new BotDiscord(DISCORD_BOT_TOKEN, DISCORD_CHANNEL_ID);
 
 async function main() {
-    const tradeEvents = await eventFetcher.fetchTrades();
+    const tradeEvents = await turbosTradeFetcher.fetchTrades();
     for (const tradeEvent of tradeEvents) {
-        const eventStr = formatTradeEvent(tradeEvent);
+        const eventStr = turbosTradeFormatter.toString(tradeEvent);
         botDiscord.sendMessage(eventStr)
         console.debug(eventStr);
     }
@@ -18,24 +25,12 @@ async function main() {
 }
 
 (async () => {
-    console.log('Starting...');
-    console.log(`LOOP_DELAY: ${LOOP_DELAY}`);
-    console.log(`TURBOS.POOL_ID: ${TURBOS.POOL_ID}\n`);
+    // console.log('Starting...');
+    // console.log(`LOOP_DELAY: ${LOOP_DELAY}`);
+    // console.log(`TURBOS.POOL_ID: ${TURBOS.POOL_ID}\n`);
+    await main();
     while (true) {
-        await main();
         await main();
         await sleep(LOOP_DELAY);
     }
 })();
-
-const DIVIDER_A = 10 ** TURBOS.DECIMALS_A;
-const DIVIDER_B = 10 ** TURBOS.DECIMALS_B;
-
-function formatTradeEvent(e: TurbosTrade): string {
-    return `
---- ${e.kind} ---
-${TURBOS.TICKER_A}: ${formatNumber(e.amountA/DIVIDER_A)}
-${TURBOS.TICKER_B}: ${formatNumber(e.amountB/DIVIDER_B)}
-sender: ${e.sender}
-txn: https://suiexplorer.com/txblock/${e.txn}?network=mainnet`;
-}
