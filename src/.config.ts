@@ -6,7 +6,9 @@ const isProd = process.env.NODE_ENV === 'prod';
  */
 export const DISCORD = {
     /** Enable/disable sending Discord messages. */
-    ENABLED: isProd ? true : false,
+    ENABLED: isProd
+        ? true  // prod
+        : true, // dev
     /** The Discord channel where to send messages. */
     CHANNEL_ID: isProd ? 'TODO' : '1197639273864777798',
 };
@@ -26,7 +28,10 @@ export const TURBOS = {
     /** The amount of decimals for the 2nd pair in the pool. */
     DECIMALS_B: 9,
     /** To fetch swap events starting at an older cursor (handy for development). */
-    NEXT_CURSOR: isProd ? null : { eventSeq: '0', txDigest: '9SMtYBiTSUipcS2SAjMf2NJ3YUgEsZhBamgkrCTkC62B' },
+    NEXT_CURSOR: isProd
+        ? null  // prod
+        : null, // dev
+        // : { eventSeq: '0', txDigest: '9SMtYBiTSUipcS2SAjMf2NJ3YUgEsZhBamgkrCTkC62B' }, // dev
 };
 
 /**
