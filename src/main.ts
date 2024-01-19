@@ -17,6 +17,9 @@ const botDiscord = new BotDiscord(DISCORD_BOT_TOKEN, DISCORD.CHANNEL_ID);
 async function main() {
     const tradeEvents = await turbosTradeFetcher.fetchTrades();
     for (const tradeEvent of tradeEvents) {
+        if ( tradeEvent.amountB < TURBOS.MINIMUM_TRADE_SIZE_B * (10**TURBOS.DECIMALS_B) ) {
+            continue;
+        }
         const eventStr = turbosTradeFormatter.toString(tradeEvent);
         if (DISCORD.ENABLED) {
             botDiscord.sendMessage(eventStr); // TODO: handle rate limits

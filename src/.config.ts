@@ -27,6 +27,8 @@ export const TURBOS = {
     DECIMALS_A: 5,
     /** The amount of decimals for the 2nd pair in the pool. */
     DECIMALS_B: 9,
+    /** Ignore trades smaller than this amount of TICKER_B units */
+    MINIMUM_TRADE_SIZE_B: 200,
     /** To fetch swap events starting at an older cursor (handy for development). */
     NEXT_CURSOR: isProd
         ? null  // prod

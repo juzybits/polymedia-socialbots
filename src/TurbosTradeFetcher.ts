@@ -58,7 +58,7 @@ export class TurbosTradeFetcher {
 
     private async fetchLastTradeAndUpdateCursor(): Promise<void>
     {
-        console.debug(`--- [TurbosTradeFetcher] fetchLastTradeAndUpdateCursor()`);
+        // console.debug(`[TurbosTradeFetcher] fetchLastTradeAndUpdateCursor()`);
 
         // fetch last event
         const suiEvents = await this.suiClient.queryEvents({
@@ -77,7 +77,7 @@ export class TurbosTradeFetcher {
 
     private async fetchTradesFromCursor(): Promise<TurbosTrade[]>
     {
-        console.debug(`--- [TurbosTradeFetcher] fetchTradesFromCursor()`);
+        // console.debug(`[TurbosTradeFetcher] fetchTradesFromCursor()`);
 
         // fetch events from cursor
         const suiEvents = await this.suiClient.queryEvents({
