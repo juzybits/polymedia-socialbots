@@ -2,14 +2,20 @@ export const APP_ENV = process.env.NODE_ENV === 'prod' ? 'prod' : 'dev';
 const isProd = process.env.NODE_ENV === 'prod';
 
 /**
- * The channel where BotDiscord should send messages.
+ * Discord bot configuration.
  */
-export const DISCORD_CHANNEL_ID = isProd
-    ? 'TODO'
-    : '1197639273864777798'; // Polymedia (dev)
+export const DISCORD = {
+    ENABLED: true,
+    /**
+     * The channel where BotDiscord should send messages.
+     */
+    CHANNEL_ID: isProd
+        ? 'TODO'
+        : '1197639273864777798', // Polymedia (dev)
+};
 
 /**
- * Configuration for TurbosEventFetcher.
+ * TurbosEventFetcher configuration.
  */
 export const TURBOS = {
     /**

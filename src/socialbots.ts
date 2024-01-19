@@ -1,6 +1,6 @@
 import { sleep } from '@polymedia/suits';
 import { DISCORD_BOT_TOKEN } from './.auth.js';
-import { DISCORD_CHANNEL_ID, APP_ENV, LOOP_DELAY, TURBOS } from './.config.js';
+import { APP_ENV, DISCORD, LOOP_DELAY, TURBOS } from './.config.js';
 import { BotDiscord } from './BotDiscord.js';
 import { TurbosTradeFetcher } from './TurbosTradeFetcher.js';
 import { TurbosTradeFormatter } from './TurbosTradeFormatter.js';
@@ -12,13 +12,15 @@ const turbosTradeFormatter = new TurbosTradeFormatter(
     TURBOS.DECIMALS_A,
     TURBOS.DECIMALS_B
 );
-const botDiscord = new BotDiscord(DISCORD_BOT_TOKEN, DISCORD_CHANNEL_ID);
+const botDiscord = new BotDiscord(DISCORD_BOT_TOKEN, DISCORD.CHANNEL_ID);
 
 async function main() {
     const tradeEvents = await turbosTradeFetcher.fetchTrades();
     for (const tradeEvent of tradeEvents) {
         const eventStr = turbosTradeFormatter.toString(tradeEvent);
-        // botDiscord.sendMessage(eventStr); // TODO: handle rate limits
+        if (DISCORD.ENABLED) {
+            botDiscord.sendMessage(eventStr); // TODO: handle rate limits
+        }
         console.debug(eventStr);
     }
     // console.debug(`(main) events.length: ${tradeEvents.length}\n`);
