@@ -2,7 +2,7 @@
 module.exports = {
     apps : [{
         name: 'socialbots',
-        script: 'dist/socialbots.js',
+        script: 'dist/main.js',
         env: {
             NODE_ENV: 'dev',
         },
