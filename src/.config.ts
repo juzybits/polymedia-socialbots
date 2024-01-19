@@ -1,3 +1,4 @@
+export const APP_ENV = process.env.NODE_ENV === 'prod' ? 'prod' : 'dev';
 const isProd = process.env.NODE_ENV === 'prod';
 
 /**
