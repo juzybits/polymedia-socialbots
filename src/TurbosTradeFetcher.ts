@@ -32,10 +32,10 @@ export class TurbosTradeFetcher {
     private eventCursor: EventId|null;
     private rateLimitDelay = 334; // how long to sleep between RPC requests, in milliseconds
 
-    constructor(poolId: string) {
+    constructor(poolId: string, nextCursor: EventId|null = null) {
         this.poolId = poolId;
         this.suiClient = new SuiClient({ url: getFullnodeUrl('mainnet')});
-        this.eventCursor = null;
+        this.eventCursor = nextCursor;
     }
 
     /**
@@ -72,10 +72,6 @@ export class TurbosTradeFetcher {
             console.error(`[TurbosTradeFetcher] unexpected missing cursor`);
         } else {
             this.eventCursor = suiEvents.nextCursor;
-            // this.eventCursor = {
-            //     txDigest: 'HiJ3ybkNhyc3e4FM2mLbfURvjxVSizjctfxCN3KCeqYw',
-            //     eventSeq: '0',
-            // }
         }
     }
 

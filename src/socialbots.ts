@@ -5,7 +5,7 @@ import { BotDiscord } from './BotDiscord.js';
 import { TurbosTradeFetcher } from './TurbosTradeFetcher.js';
 import { TurbosTradeFormatter } from './TurbosTradeFormatter.js';
 
-const turbosTradeFetcher = new TurbosTradeFetcher(TURBOS.POOL_ID);
+const turbosTradeFetcher = new TurbosTradeFetcher(TURBOS.POOL_ID, TURBOS.NEXT_CURSOR);
 const turbosTradeFormatter = new TurbosTradeFormatter(
     TURBOS.TICKER_A,
     TURBOS.TICKER_B,
