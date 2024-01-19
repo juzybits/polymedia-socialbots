@@ -5,7 +5,7 @@ const isProd = process.env.NODE_ENV === 'prod';
  */
 export const DISCORD_CHANNEL_ID = isProd
     ? 'TODO'
-    : '1197639273864777798'; // Polymedia #fud-trades
+    : '1197639273864777798'; // Polymedia (dev)
 
 /**
  * Configuration for TurbosEventFetcher.

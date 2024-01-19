@@ -2,13 +2,13 @@ import { formatNumber, sleep } from '@polymedia/suits';
 import { DISCORD_BOT_TOKEN } from './.auth.js';
 import { DISCORD_CHANNEL_ID, LOOP_DELAY, TURBOS } from './.config.js';
 import { BotDiscord } from './BotDiscord.js';
-import { TradeEvent, TurbosEventFetcher } from './TurbosEventFetcher.js';
+import { TurbosTrade, TurbosTradeFetcher } from './TurbosTradeFetcher.js';
 
-const eventFetcher = new TurbosEventFetcher(TURBOS.POOL_ID);
+const eventFetcher = new TurbosTradeFetcher(TURBOS.POOL_ID);
 const botDiscord = new BotDiscord(DISCORD_BOT_TOKEN, DISCORD_CHANNEL_ID);
 
 async function main() {
-    const tradeEvents = await eventFetcher.fetchTradeEvents();
+    const tradeEvents = await eventFetcher.fetchTrades();
     for (const tradeEvent of tradeEvents) {
         const eventStr = formatTradeEvent(tradeEvent);
         botDiscord.sendMessage(eventStr)
@@ -31,7 +31,7 @@ async function main() {
 const DIVIDER_A = 10 ** TURBOS.DECIMALS_A;
 const DIVIDER_B = 10 ** TURBOS.DECIMALS_B;
 
-function formatTradeEvent(e: TradeEvent): string {
+function formatTradeEvent(e: TurbosTrade): string {
     return `
 --- ${e.kind} ---
 ${TURBOS.TICKER_A}: ${formatNumber(e.amountA/DIVIDER_A)}

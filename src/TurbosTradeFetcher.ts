@@ -3,7 +3,10 @@ import { formatNumber, sleep } from '@polymedia/suits';
 
 const TURBOS_SWAP_EVENT = '0x91bfbc386a41afcfd9b2533058d7e915a1d3829089cc268ff4333d54d6339ca1::pool::SwapEvent';
 
-export type TradeEvent = {
+/**
+ * Selected Turbos swap event data.
+ */
+export type TurbosTrade = {
     txn: string;
     sender: string;
     kind: 'buy'|'sell';
@@ -12,6 +15,9 @@ export type TradeEvent = {
     date: Date;
 }
 
+/**
+ * The full Turbos swap event data in raw form.
+ */
 type TurbosSwapEventData = {
     a_to_b: boolean;
     amount_a: string;
@@ -27,7 +33,11 @@ type TurbosSwapEventData = {
     tick_pre_index: { bits: string };
 }
 
-export class TurbosEventFetcher {
+/**
+ * Fetch the latest Turbos trades for a given pool.
+ * @see TurbosTradeFetcher.fetchTrades
+ */
+export class TurbosTradeFetcher {
     private poolId: string;
     private suiClient: SuiClient;
     private eventCursor: EventId|null;
@@ -39,23 +49,27 @@ export class TurbosEventFetcher {
         this.eventCursor = null;
     }
 
-    public async fetchTradeEvents(): Promise<TradeEvent[]> {
+    /**
+     * Fetch the latest Turbos trades for a given pool. Every time the function
+     * is called it looks for events that took place since the last call.
+     */
+    public async fetchTrades(): Promise<TurbosTrade[]> {
         try {
             if (!this.eventCursor) { // 1st run
-                await this.fetchLastEventAndUpdateCursor();
+                await this.fetchLastTradeAndUpdateCursor();
                 return [];
             } else {
-                return await this.fetchEventsFromCursor();
+                return await this.fetchTradesFromCursor();
             }
         } catch(error) {
-            console.error(`[TurbosEventFetcher] ${error}`);
+            console.error(`[TurbosTradeFetcher] ${error}`);
             return [];
         }
     }
 
-    private async fetchLastEventAndUpdateCursor(): Promise<void>
+    private async fetchLastTradeAndUpdateCursor(): Promise<void>
     {
-        console.debug(`--- [TurbosEventFetcher] fetchLastEventAndUpdateCursor()`);
+        console.debug(`--- [TurbosTradeFetcher] fetchLastTradeAndUpdateCursor()`);
 
         // fetch last event
         const suiEvents = await this.suiClient.queryEvents({
@@ -66,19 +80,19 @@ export class TurbosEventFetcher {
 
         // update cursor
         if (!suiEvents.nextCursor) {
-            console.error(`[TurbosEventFetcher] unexpected missing cursor`);
+            console.error(`[TurbosTradeFetcher] unexpected missing cursor`);
         } else {
             this.eventCursor = suiEvents.nextCursor;
             // this.eventCursor = {
-            //     txDigest: '3TqbCXKaNHDNvQatYas2D4cx2rqfVUhNtA3kPEK2JXUN',
+            //     txDigest: 'HiJ3ybkNhyc3e4FM2mLbfURvjxVSizjctfxCN3KCeqYw',
             //     eventSeq: '0',
             // }
         }
     }
 
-    private async fetchEventsFromCursor(): Promise<TradeEvent[]>
+    private async fetchTradesFromCursor(): Promise<TurbosTrade[]>
     {
-        console.debug(`--- [TurbosEventFetcher] fetchEventsFromCursor()`);
+        console.debug(`--- [TurbosTradeFetcher] fetchTradesFromCursor()`);
 
         // fetch events from cursor
         const suiEvents = await this.suiClient.queryEvents({
@@ -90,19 +104,19 @@ export class TurbosEventFetcher {
 
         // update cursor
         if (!suiEvents.nextCursor) {
-            console.error(`[TurbosEventFetcher] unexpected missing cursor`);
+            console.error(`[TurbosTradeFetcher] unexpected missing cursor`);
             return [];
         }
         this.eventCursor = suiEvents.nextCursor;
 
         // parse events
-        const tradeEvents: TradeEvent[] = [];
+        const trades: TurbosTrade[] = [];
         for (const suiEvent of suiEvents.data) {
             const turbosEventData = suiEvent.parsedJson as TurbosSwapEventData;
             if (turbosEventData.pool !== this.poolId) {
                 continue;
             }
-            const tradeEvent: TradeEvent =  {
+            const trade: TurbosTrade =  {
                 txn: suiEvent.id.txDigest,
                 sender: suiEvent.sender,
                 kind: turbosEventData.a_to_b ? 'sell' : 'buy',
@@ -110,7 +124,7 @@ export class TurbosEventFetcher {
                 amountB: Number(turbosEventData.amount_b),
                 date: new Date(Number(suiEvent.timestampMs)),
             };
-            tradeEvents.push(tradeEvent);
+            trades.push(trade);
         }
         // console.debug('suiEvents.data.length:', suiEvents.data.length)
         // console.debug('hasNextPage:', suiEvents.hasNextPage);
@@ -118,12 +132,12 @@ export class TurbosEventFetcher {
 
         // call this function recursively if there's newer events that didn't fit in the page
         if (suiEvents.hasNextPage) {
-            // console.debug(`[TurbosEventFetcher] has next page, will fetching recursively`);
+            // console.debug(`[TurbosTradeFetcher] has next page, will fetching recursively`);
             await sleep(this.rateLimitDelay);
-            const nextEvents = await this.fetchEventsFromCursor();
-            tradeEvents.push(...nextEvents);
+            const nextTrades = await this.fetchTradesFromCursor();
+            trades.push(...nextTrades);
         }
 
-        return tradeEvents;
+        return trades;
     }
 }
