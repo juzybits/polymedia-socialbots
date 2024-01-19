@@ -16,8 +16,9 @@
         "bots"
     ],
     "scripts": {
-        "start-socialbots": "rm -rf dist/ && tsc && pm2 start dist/socialbots.js",
-        "start-socialbots-dev": "rm -rf dist/ && tsc && node dist/socialbots.js",
+        "start-socialbots":      "rm -rf dist/ && tsc && pm2 start pm2.config.cjs --env dev",
+        "start-socialbots-prod": "rm -rf dist/ && tsc && pm2 start pm2.config.cjs --env prod",
+        "start-socialbots-node": "rm -rf dist/ && tsc && node dist/socialbots.js",
         "build": "rm -rf dist/ && tsc"
     },
     "dependencies": {
