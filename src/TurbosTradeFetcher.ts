@@ -1,5 +1,5 @@
 import { EventId, SuiEvent } from '@mysten/sui.js/client';
-import { SuiEventFetcher } from './SuiEventFetcher.js';
+import { SuiEventFetcher } from '@polymedia/suits';
 import { TurbosTrade } from './types';
 
 const TURBOS_SWAP_EVENT = '0x91bfbc386a41afcfd9b2533058d7e915a1d3829089cc268ff4333d54d6339ca1::pool::SwapEvent';
@@ -39,6 +39,10 @@ export class TurbosTradeFetcher {
         );
     }
 
+    /**
+     * Fetch the latest Turbos trades for a given pool. Every time the function
+     * is called it looks for events that took place since the last call.
+     */
     public async fetchTrades(): Promise<TurbosTrade[]> {
         return this.suiEventFetcher.fetchEvents();
     }
