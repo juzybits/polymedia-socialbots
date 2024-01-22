@@ -1,4 +1,4 @@
-import { formatNumber, makeSuiExplorerUrl } from '@polymedia/suits';
+import { formatNumber } from '@polymedia/suits';
 import { TurbosTrade } from './types';
 
 export class TurbosTradeFormatter
@@ -19,18 +19,13 @@ export class TurbosTradeFormatter
         const amountA = trade.amountA / this.dividerA;
         const amountB = trade.amountB / this.dividerB;
         const emoji = trade.kind === 'buy' ? '🟢' : '🔴';
-        // add 1 extra emoji for every 1000 units of amountB starting at 2000 units
-        // so (2000 units gets 2 emojis, 3000 units get 3 emojis, and so on)
-        const numExtraEmojis = amountB < 2000 ? 0 : Math.floor((amountB - 1000) / 1000);;
-        const extraEmojis = emoji.repeat(numExtraEmojis);
+        const emojiCount = 1 + Math.floor(amountB / 1000); // 1 extra emoji for every 1000 units of amountB
+        const emojis = emoji.repeat(emojiCount);
         return `
-${emoji}${extraEmojis}
+${emojis}
 **${trade.kind.toUpperCase()}**
 ${this.tickerA}: ${formatNumber(amountA)}
 ${this.tickerB}: ${formatNumber(amountB)}
-transaction:
-${makeSuiExplorerUrl('mainnet', 'txblock', trade.txn)}
-sender:
-${makeSuiExplorerUrl('mainnet', 'address', trade.sender)}`;
+trader: ${trade.sender}`;
     }
 }
