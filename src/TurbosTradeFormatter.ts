@@ -19,7 +19,7 @@ export class TurbosTradeFormatter
         const amountA = trade.amountA / this.dividerA;
         const amountB = trade.amountB / this.dividerB;
         const emoji = trade.kind === 'buy' ? '🟢' : '🔴';
-        const emojiCount = 1 + Math.round(amountB / 1000); // 1 extra emoji for every 1000 units of amountB
+        const emojiCount = 1 + Math.floor(amountB / 1000); // 1 extra emoji for every 1000 units of amountB
         const emojis = emoji.repeat(emojiCount);
         return `
 ${emojis}
