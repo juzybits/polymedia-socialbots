@@ -26,6 +26,7 @@ ${emojis}
 **${trade.kind.toUpperCase()}**
 ${this.tickerA}: ${formatNumber(amountA, 'compact')}
 ${this.tickerB}: ${formatNumber(amountB, 'compact')}
-trader: ${makeSuiExplorerUrl('mainnet', 'address', trade.sender)}`;
+Transaction: ${makeSuiExplorerUrl('mainnet', 'txblock', trade.txn)}
+Sender: ${makeSuiExplorerUrl('mainnet', 'address', trade.sender)}`;
     }
 }
