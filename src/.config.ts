@@ -10,7 +10,7 @@ export const DISCORD = {
         ? true  // prod
         : true, // dev
     /** The Discord channel where to send messages. */
-    CHANNEL_ID: isProd ? 'TODO' : '1197639273864777798',
+    CHANNEL_ID: isProd ? '1199365779708190800' : '1197639273864777798',
 };
 
 /**
