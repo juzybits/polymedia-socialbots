@@ -4,9 +4,9 @@ Fetch Sui onchain events and post to social media.
 
 ![Polymedia SocialBots](https://assets.polymedia.app/img/socialbots/open-graph.webp)
 
-Currently it only looks at Turbos Finance trade events and only post messages to Discord, but it can be extended to support other onchain events and social media platforms.
+It tracks Turbos Finance trades and posts messages to Discord, but can be extended to support other onchain events and social media platforms.
 
-## Set up API access
+## Enable API access
 
 ### Discord
 
@@ -16,7 +16,7 @@ https://discord.com/developers/applications
 2. Add the bot to your Discord server by visiting this URL. It only needs the "send messages" permission.<br/>
 https://discord.com/api/oauth2/authorize?client_id=YOUR_APPLICATION_ID&permissions=2048&scope=bot
 
-3. Enable Discord developer mode. Then, right click on the Discord channel where you want the bot to send messages and click `Copy Channel ID` (you'll need it for `src/.config.ts`).
+3. Enable Discord developer mode, right click on the Discord channel where you want the bot to send messages, and click `Copy Channel ID` (you'll need it for `src/.config.ts`).
 
 ## Installation
 
@@ -41,8 +41,8 @@ src/.config.ts
 ```bash
 # start the app
 pnpm start-dev  # development, runs with 'pm2'
-pnpm start-prod # production,  runs with 'pm2'
 pnpm start-node # development, runs with 'node'
+pnpm start-prod # production,  runs with 'pm2'
 
 # check if the app is running
 pm2 ls
@@ -74,7 +74,7 @@ sudo apt install nodejs npm -y
 # Start the app
 pnpm start-prod
 
-# Set up pm2 to restart your app on server reboots
+# Set up pm2 to restart the app on server reboots
 pm2 startup
 
 # Save the pm2 process list

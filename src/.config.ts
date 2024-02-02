@@ -3,18 +3,20 @@ const isProd = process.env.NODE_ENV === 'prod';
 
 /**
  * Discord bot configuration.
+ * This is for the FUD Discord - change the CHANNEL_ID below.
  */
 export const DISCORD = {
+    /** The Discord channel where to send messages. */
+    CHANNEL_ID: isProd ? '1199365779708190800' : '1197639273864777798',
     /** Enable/disable sending Discord messages. */
     ENABLED: isProd
         ? true  // prod
         : true, // dev
-    /** The Discord channel where to send messages. */
-    CHANNEL_ID: isProd ? '1199365779708190800' : '1197639273864777798',
 };
 
 /**
- * TurbosEventFetcher configuration.
+ * TurbosTradeFetcher configuration.
+ * This is for FUD/SUI - adapt it for the pool you want to track.
  */
 export const TURBOS = {
     /** The Turbos Finance pool we want to watch. */
@@ -27,7 +29,7 @@ export const TURBOS = {
     DECIMALS_A: 5,
     /** The amount of decimals for the 2nd pair in the pool. */
     DECIMALS_B: 9,
-    /** Ignore trades smaller than this amount of TICKER_B units */
+    /** Ignore trades smaller than this amount of TICKER_B units. */
     MINIMUM_TRADE_SIZE_B: 100,
     /** To fetch swap events starting at an older cursor (handy for development). */
     NEXT_CURSOR: isProd
