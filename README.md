@@ -1,8 +1,10 @@
 # Polymedia SocialBots
 
-Fetch Sui on-chain events and post messages to Discord, Telegram, Twitter.
+Fetch Sui onchain events and post to social media.
 
-Currently it only looks at Turbos Finance trades and only posts to Discord.
+![Polymedia SocialBots](https://assets.polymedia.app/img/socialbots/open-graph.webp)
+
+Currently it only looks at Turbos Finance trade events and only post messages to Discord, but it can be extended to support other onchain events and social media platforms.
 
 ## Set up API access
 
@@ -27,10 +29,11 @@ git clone https://github.com/juzybits/polymedia-socialbots.git
 cd polymedia-socialbots
 pnpm install
 
-# Create and modify `src/.auth.ts` (add your Discord bot token, etc):
+# Add your authentication credentials:
 cp src/.auth.example.ts src/.auth.ts
 
-# Modify `src/.config.ts` (add your Discord channel ID, etc):
+# Modify the configuration (add your Discord channel ID, your Turbos pool, etc):
+src/.config.ts
 ```
 
 ## Usage

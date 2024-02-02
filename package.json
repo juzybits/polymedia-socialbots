@@ -4,7 +4,7 @@
     "name": "@polymedia/socialbots",
     "author": "@juzybits (https://polymedia.app)",
     "homepage": "https://github.com/juzybits/polymedia-socialbots",
-    "description": "Bots for Twitter, Telegram, Discord",
+    "description": "Fetch Sui onchain events and post to social media",
     "license": "Apache-2.0",
     "repository": {
         "type": "git",

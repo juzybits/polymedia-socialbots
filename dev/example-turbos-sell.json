@@ -1,0 +1,30 @@
+{
+    "id": {
+        "txDigest": "235FUoCc2AQJrsi7rX1qZ6PitwNK3vGxRMjqND5MuAMq",
+        "eventSeq": "0"
+    },
+    "packageId": "0x91bfbc386a41afcfd9b2533058d7e915a1d3829089cc268ff4333d54d6339ca1",
+    "transactionModule": "swap_router",
+    "sender": "0xeb2c0e92fb7ae982c6a0d9b5c444d2d4336ad483cab81e85a0ae0f7ad597a94d",
+    "type": "0x91bfbc386a41afcfd9b2533058d7e915a1d3829089cc268ff4333d54d6339ca1::pool::SwapEvent",
+    "parsedJson": {
+        "a_to_b": true,
+        "amount_a": "101272110898",
+        "amount_b": "210313223",
+        "fee_amount": "1012721109",
+        "is_exact_in": true,
+        "liquidity": "9340993168932006",
+        "pool": "0xbd85f61a1b755b6034c62f16938d6da7c85941705d9d10aa1843b809b0e35582",
+        "protocol_fee": "303816332",
+        "recipient": "0xeb2c0e92fb7ae982c6a0d9b5c444d2d4336ad483cab81e85a0ae0f7ad597a94d",
+        "sqrt_price": "844870949906240863",
+        "tick_current_index": {
+            "bits": 4294905623
+        },
+        "tick_pre_index": {
+            "bits": 4294905623
+        }
+    },
+    "bcs": "5owEP2o1xm22kfDhe8CmbAXGWVVjTw89Q56ZsqVEZBPTCVQat8SYW8ZyPE74PNc8VPWud8uxYmazHPJH8jJsdeLpA8W2koXEkXvmeWQtB4yYtq8fwQUubSxgPaMEiGJc1J2kcfN2QXE5RSrkW43ujcRXLWFHMAons5wQbbgmkj1stcuCoRCoq6Lzgimzp",
+    "timestampMs": "1705358241685"
+}
