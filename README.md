@@ -1,10 +1,10 @@
 # Polymedia SocialBots
 
-Fetch Sui onchain events and post to social media.
+Fetch Sui onchain events and post messages to social media.
 
 ![Polymedia SocialBots](https://assets.polymedia.app/img/socialbots/open-graph.webp)
 
-It tracks Turbos Finance trades and posts messages to Discord, but can be extended to support other onchain events and social media platforms.
+It monitors Turbos Finance trades and posts messages to Discord, but can be extended to support other onchain events and social media platforms.
 
 ## Enable API access
 
