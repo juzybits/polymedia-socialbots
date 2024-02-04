@@ -39,3 +39,8 @@ async function main() {
         await sleep(LOOP_DELAY);
     }
 })();
+
+// TODO: https://api.dexscreener.com/latest/dex/pairs/sui/${TURBOS.POOL_ID}
+// - Show USD value of trade
+// - Show USD exchange rate
+// - Show FDV or market cap
