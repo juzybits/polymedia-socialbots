@@ -1,5 +1,5 @@
 export const APP_ENV = process.env.NODE_ENV === 'prod' ? 'prod' : 'dev';
-const isProd = process.env.NODE_ENV === 'prod';
+const isProd = APP_ENV === 'prod';
 
 /**
  * Discord bot configuration.
@@ -11,7 +11,7 @@ export const DISCORD = {
     /** Enable/disable sending Discord messages. */
     ENABLED: isProd
         ? true  // prod
-        : true, // dev
+        : false, // dev
 };
 
 /**
@@ -39,6 +39,6 @@ export const TURBOS = {
 };
 
 /**
- * How long to delay between socialbots.ts executions (fetch Turbos events and send bot messages).
+ * How long to delay between executions in the main script
  */
 export const LOOP_DELAY = 5_000;

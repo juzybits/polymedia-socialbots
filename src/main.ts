@@ -1,6 +1,6 @@
 import { sleep } from '@polymedia/suits';
 import { DISCORD_BOT_TOKEN } from './.auth.js';
-import { APP_ENV, DISCORD, LOOP_DELAY, TURBOS } from './.config.js';
+import { APP_ENV, DISCORD, LOOP_DELAY, TURBOS } from './config.js';
 import { BotDiscord } from './BotDiscord.js';
 import { TurbosTradeFetcher } from './TurbosTradeFetcher.js';
 import { TurbosTradeFormatter } from './TurbosTradeFormatter.js';

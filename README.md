@@ -16,7 +16,7 @@ https://discord.com/developers/applications
 2. Add the bot to your Discord server by visiting this URL. It only needs the "send messages" permission.<br/>
 https://discord.com/api/oauth2/authorize?client_id=YOUR_APPLICATION_ID&permissions=2048&scope=bot
 
-3. Enable Discord developer mode, right click on the Discord channel where you want the bot to send messages, and click `Copy Channel ID` (you'll need it for `src/.config.ts`).
+3. Enable Discord developer mode, right click on the Discord channel where you want the bot to send messages, and click `Copy Channel ID` (you'll need it for `src/config.ts`).
 
 ## Installation
 
@@ -33,7 +33,7 @@ pnpm install
 cp src/.auth.example.ts src/.auth.ts
 
 # Modify the configuration (add your Discord channel ID, your Turbos pool, etc):
-src/.config.ts
+src/config.ts
 ```
 
 ## Usage
