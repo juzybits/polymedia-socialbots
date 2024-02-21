@@ -23,8 +23,8 @@
         "build": "rm -rf dist/ && tsc"
     },
     "dependencies": {
-        "@mysten/sui.js": "latest",
-        "@polymedia/suits": "latest",
+        "@mysten/sui.js": "^0.50.1",
+        "@polymedia/suits": "^0.0.24",
         "dotenv": "^16.4.5"
     },
     "devDependencies": {
