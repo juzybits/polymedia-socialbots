@@ -10,7 +10,7 @@ It monitors Turbos Finance trades and posts messages to Discord, but can be exte
 
 ### Discord
 
-1. Create a Discord bot and copy the bot token (you'll need it for `src/.auth.ts`).<br/>
+1. Create a Discord bot and copy the bot token (you'll need it for `.env`).<br/>
 https://discord.com/developers/applications
 
 2. Add the bot to your Discord server by visiting this URL. It only needs the "send messages" permission.<br/>
@@ -30,7 +30,7 @@ cd polymedia-socialbots
 pnpm install
 
 # Add your authentication credentials:
-cp src/.auth.example.ts src/.auth.ts
+cp .env.example .env
 
 # Modify the configuration (add your Discord channel ID, your Turbos pool, etc):
 src/config.ts

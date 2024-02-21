@@ -17,14 +17,15 @@
     ],
     "scripts": {
         "clean": "rm -rf dist/ node_modules/",
-        "start-dev":  "rm -rf dist/ && tsc && pm2 start pm2.config.cjs --env dev",
+        "start-dev": "rm -rf dist/ && tsc && pm2 start pm2.config.cjs --env dev",
         "start-prod": "rm -rf dist/ && tsc && pm2 start pm2.config.cjs --env prod",
         "start-node": "rm -rf dist/ && tsc && node dist/main.js",
         "build": "rm -rf dist/ && tsc"
     },
     "dependencies": {
         "@mysten/sui.js": "latest",
-        "@polymedia/suits": "latest"
+        "@polymedia/suits": "latest",
+        "dotenv": "^16.4.5"
     },
     "devDependencies": {
         "@types/node": "latest",

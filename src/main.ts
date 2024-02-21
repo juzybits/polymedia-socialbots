@@ -1,9 +1,16 @@
 import { sleep } from '@polymedia/suits';
-import { DISCORD_BOT_TOKEN } from './.auth.js';
-import { APP_ENV, DISCORD, LOOP_DELAY, TURBOS } from './config.js';
+import dotenv from 'dotenv';
 import { BotDiscord } from './BotDiscord.js';
 import { TurbosTradeFetcher } from './TurbosTradeFetcher.js';
 import { TurbosTradeFormatter } from './TurbosTradeFormatter.js';
+import { APP_ENV, DISCORD, LOOP_DELAY, TURBOS } from './config.js';
+
+/* Read API credentials */
+dotenv.config();
+const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN;
+if (!DISCORD_BOT_TOKEN) {
+    throw new Error('Error: Missing required environment variables.');
+}
 
 const turbosTradeFetcher = new TurbosTradeFetcher(TURBOS.POOL_ID, TURBOS.NEXT_CURSOR);
 const turbosTradeFormatter = new TurbosTradeFormatter(
