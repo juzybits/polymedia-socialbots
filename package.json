@@ -16,11 +16,12 @@
         "bots"
     ],
     "scripts": {
-        "clean": "rm -rf dist/ node_modules/",
         "start-dev": "rm -rf dist/ && tsc && pm2 start pm2.config.cjs --env dev",
         "start-prod": "rm -rf dist/ && tsc && pm2 start pm2.config.cjs --env prod",
         "start-node": "rm -rf dist/ && tsc && node dist/main.js",
-        "build": "rm -rf dist/ && tsc"
+        "build": "tsc",
+        "clean": "rm -rf dist/ node_modules/",
+        "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
     },
     "dependencies": {
         "@mysten/sui.js": "^0.50.1",
@@ -29,6 +30,9 @@
     },
     "devDependencies": {
         "@types/node": "latest",
+        "@typescript-eslint/eslint-plugin": "^7.0.2",
+        "@typescript-eslint/parser": "^7.0.2",
+        "eslint": "^8.56.0",
         "typescript": "latest"
     },
     "type": "module",
