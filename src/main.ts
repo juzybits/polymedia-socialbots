@@ -32,16 +32,16 @@ async function main() {
         // post a message
         const eventStr = turbosTradeFormatter.toString(tradeEvent);
         if (DISCORD.ENABLED) {
-            botDiscord.sendMessage(eventStr); // TODO: handle rate limits
+            void botDiscord.sendMessage(eventStr); // TODO: handle rate limits
         }
         console.debug(eventStr);
     }
     // console.debug(`(main) events.length: ${tradeEvents.length}\n`);
 }
 
-(async () => {
+void (async () => {
     console.log(`Starting in ${APP_ENV} mode...`);
-    while (true) {
+    while (true) { // eslint-disable-line
         await main();
         await sleep(LOOP_DELAY);
     }

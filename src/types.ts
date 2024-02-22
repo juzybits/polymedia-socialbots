@@ -1,7 +1,7 @@
 /**
  * A social media client who can post a message (Discord, Telegram, Twitter).
  */
-export interface Bot {
+export type Bot = {
     sendMessage(message: string): Promise<boolean>;
 }
 
