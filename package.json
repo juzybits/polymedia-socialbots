@@ -24,16 +24,16 @@
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
     },
     "dependencies": {
-        "@mysten/sui.js": "^0.50.1",
-        "@polymedia/suits": "^0.0.24",
+        "@mysten/sui.js": "^0.51.0",
+        "@polymedia/suits": "^0.0.37",
         "dotenv": "^16.4.5"
     },
     "devDependencies": {
-        "@types/node": "latest",
-        "@typescript-eslint/eslint-plugin": "^7.0.2",
-        "@typescript-eslint/parser": "^7.0.2",
-        "eslint": "^8.56.0",
-        "typescript": "latest"
+        "@types/node": "^20.11.30",
+        "@typescript-eslint/eslint-plugin": "^7.3.1",
+        "@typescript-eslint/parser": "^7.3.1",
+        "eslint": "^8.57.0",
+        "typescript": "^5.4.2"
     },
     "type": "module",
     "sideEffects": false

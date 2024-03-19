@@ -1,4 +1,4 @@
-import { formatNumber, makeSuiExplorerUrl } from '@polymedia/suits';
+import { formatNumber, makeExplorerUrl } from '@polymedia/suits';
 import { TurbosTrade } from './types';
 
 export class TurbosTradeFormatter
@@ -26,7 +26,7 @@ ${emojis}
 **${trade.kind.toUpperCase()}**
 ${this.tickerA}: ${formatNumber(amountA, 'compact')}
 ${this.tickerB}: ${formatNumber(amountB, 'compact')}
-Transaction: ${makeSuiExplorerUrl('mainnet', 'txblock', trade.txn)}
-Sender: ${makeSuiExplorerUrl('mainnet', 'address', trade.sender)}`;
+Transaction: ${makeExplorerUrl('mainnet', 'txblock', trade.txn)}
+Sender: ${makeExplorerUrl('mainnet', 'address', trade.sender)}`;
     }
 }
