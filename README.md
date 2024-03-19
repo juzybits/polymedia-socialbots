@@ -80,3 +80,11 @@ pm2 startup
 # Save the pm2 process list
 pm2 save
 ```
+
+## Updating in prod
+
+One-liner to update and restart the bot in your server with minimal downtime:
+
+```
+git pull && pnpm i && pm2 stop socialbots && pm2 flush && pnpm start-prod && pm2 save
+```
