@@ -20,9 +20,9 @@ export const DISCORD = {
  */
 export const TELEGRAM = {
     /** The Telegram group where to send messages. */
-    GROUP_ID: isProd ? 'TODO' : '@testfudgroup',
-    /** The Telegram thread where to send messages. */
-    THREAD_ID: isProd ? 'TODO' : '3',
+    GROUP_ID: isProd ? '@fudthepug' : '@testfudgroup',
+    /** (optional) The Telegram thread where to send messages. */
+    THREAD_ID: isProd ? null : '3',
     /** Enable/disable sending Telegram messages. */
     ENABLED: isProd
         ? true  // prod
@@ -45,7 +45,7 @@ export const TURBOS = {
     /** The amount of decimals for the 2nd pair in the pool. */
     DECIMALS_B: 9,
     /** Ignore trades smaller than this amount of TICKER_B units. */
-    MINIMUM_TRADE_SIZE_B: 100,
+    MINIMUM_TRADE_SIZE_B: 500,
     /** To fetch swap events starting at an older cursor (handy for development). */
     NEXT_CURSOR: isProd
         ? null  // prod

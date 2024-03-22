@@ -68,7 +68,7 @@ async function main()
 /* Start main loop */
 
 void (async () => {
-    console.log(`Starting in ${APP_ENV} mode...`);
+    console.log(`Starting in ${APP_ENV} mode with: ${bots.map(bot => bot.constructor.name).join(', ')}`);
     while (true) { // eslint-disable-line
         await main();
         await sleep(LOOP_DELAY);

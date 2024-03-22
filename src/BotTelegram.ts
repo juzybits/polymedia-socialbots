@@ -4,9 +4,9 @@ export class BotTelegram extends BotAbstract
 {
     private botToken: string;
     private chatId: string;
-    private threadId: string;
+    private threadId: string|null;
 
-    constructor(botToken: string, chatId: string, threadId: string) {
+    constructor(botToken: string, chatId: string, threadId: string|null) {
         super();
         this.botToken = botToken;
         this.chatId = chatId;

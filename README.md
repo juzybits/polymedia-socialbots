@@ -27,7 +27,7 @@ https://t.me/botfather
 
 2. Add the bot to your Telegram group.
 
-3. Find the Telegram group name and thread ID where you want the bot to send messages. To do this, right click on a message and click "Copy Message Link", which gives you something like `https://t.me/yourgroup/69/420`.
+3. Find the Telegram group name and (optionally) thread ID where you want the bot to send messages. To do this, right click on a message and click "Copy Message Link", which gives you something like `https://t.me/yourgroup/69/420`.
 
 4. Open `src/config.ts` and set `TELEGRAM.GROUP_ID: '@yourgroup'` and `TELEGRAM.THREAD_ID: '69'`.
 
