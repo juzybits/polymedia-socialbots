@@ -2,21 +2,34 @@
 
 Fetch Sui onchain events and post messages to social media.
 
-![Polymedia SocialBots](https://assets.polymedia.app/img/socialbots/open-graph.webp)
+![Polymedia SocialBots](https://assets.polymedia.app/img/socialbots/open-graph.webp?x=1)
 
-It monitors Turbos Finance trades and posts messages to Discord, but can be extended to support other onchain events and social media platforms.
+It monitors trades on Turbos Finance and posts messages to Discord and Telegram, but can be extended to support other onchain events and social media platforms.
 
-## Enable API access
+## Bot setup
 
 ### Discord
 
-1. Create a Discord bot and copy the bot token (you'll need it for `.env`).<br/>
+1. Create a Discord bot, copy the bot API token, and add it to `.env`.<br/>
 https://discord.com/developers/applications
 
 2. Add the bot to your Discord server by visiting this URL. It only needs the "send messages" permission.<br/>
 https://discord.com/api/oauth2/authorize?client_id=YOUR_APPLICATION_ID&permissions=2048&scope=bot
 
-3. Enable Discord developer mode, right click on the Discord channel where you want the bot to send messages, and click `Copy Channel ID` (you'll need it for `src/config.ts`).
+3. Find the Discord channel ID where you want the bot to send messages. To do this, enable Discord developer mode, right click on the Discord channel, and click `Copy Channel ID`.
+
+4. Open `src/config.ts` and set `DISCORD.CHANNEL_ID` accordingly.
+
+### Telegram
+
+1. Create a Telegram bot, copy the bot API token, and add it to `.env`.<br/>
+https://t.me/botfather
+
+2. Add the bot to your Telegram group.
+
+3. Find the Telegram group name and thread ID where you want the bot to send messages. To do this, right click on a message and click "Copy Message Link", which gives you something like `https://t.me/yourgroup/69/420`.
+
+4. Open `src/config.ts` and set `TELEGRAM.GROUP_ID: '@yourgroup'` and `TELEGRAM.THREAD_ID: '69'`.
 
 ## Installation
 
@@ -29,10 +42,10 @@ git clone https://github.com/juzybits/polymedia-socialbots.git
 cd polymedia-socialbots
 pnpm install
 
-# Add your authentication credentials:
+# Add your authentication credentials (see 'Bot setup' section)
 cp .env.example .env
 
-# Modify the configuration (add your Discord channel ID, your Turbos pool, etc):
+# Modify the configuration (see 'Bot setup' section)
 src/config.ts
 ```
 
