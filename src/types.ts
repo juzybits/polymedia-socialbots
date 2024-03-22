@@ -1,11 +1,4 @@
 /**
- * A social media client who can post a message (Discord, Telegram, Twitter).
- */
-export type Bot = {
-    sendMessage(message: string): Promise<boolean>;
-}
-
-/**
  * Selected Turbos swap event data.
  */
 export type TurbosTrade = {

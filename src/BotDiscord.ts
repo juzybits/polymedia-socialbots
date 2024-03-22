@@ -1,38 +1,31 @@
-import { Bot } from './types.js';
+import { BotAbstract } from './BotAbstract.js';
 
-export class BotDiscord implements Bot
+export class BotDiscord extends BotAbstract
 {
     private botToken: string;
-    private urlSendMessage: string;
+    private channelId: string;
 
     constructor(botToken: string, channelId: string) {
+        super();
         this.botToken = botToken;
-        this.urlSendMessage = `https://discord.com/api/v10/channels/${channelId}/messages`;
+        this.channelId = channelId;
     }
 
-    public async sendMessage(message: string): Promise<boolean> {
-        try {
-            const response = await fetch(this.urlSendMessage, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bot ${this.botToken}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    content: message,
-                    flags: 1 << 2, // SUPPRESS_EMBEDS
-                })
-            });
+    protected getSendMessageUrl(): string {
+        return `https://discord.com/api/v10/channels/${this.channelId}/messages`;
+    }
 
-            if (!response.ok) {
-                console.error('ERROR | Discord response not ok | status:', response.status, '| response:', await response.json());
-                return false;
-            } else {
-                return true;
-            }
-        } catch (error) {
-            console.error('ERROR | Discord request failed |', error);
-            return false;
-        }
+    protected getHeaders(): HeadersInit {
+        return {
+            'Authorization': `Bot ${this.botToken}`,
+            'Content-Type': 'application/json',
+        };
+    }
+
+    protected getBody(message: string): BodyInit {
+        return JSON.stringify({
+            content: message,
+            flags: 1 << 2, // SUPPRESS_EMBEDS
+        });
     }
 }

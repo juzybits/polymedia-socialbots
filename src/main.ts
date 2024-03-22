@@ -1,10 +1,10 @@
 import { sleep } from '@polymedia/suits';
 import dotenv from 'dotenv';
 import { BotDiscord } from './BotDiscord.js';
+import { BotTelegram } from './BotTelegram.js';
 import { TurbosTradeFetcher } from './TurbosTradeFetcher.js';
 import { TurbosTradeFormatter } from './TurbosTradeFormatter.js';
 import { APP_ENV, DISCORD, LOOP_DELAY, TELEGRAM, TURBOS } from './config.js';
-import { BotTelegram } from './BotTelegram.js';
 
 /* Read API credentials */
 dotenv.config();
