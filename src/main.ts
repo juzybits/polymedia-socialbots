@@ -3,12 +3,14 @@ import dotenv from 'dotenv';
 import { BotDiscord } from './BotDiscord.js';
 import { TurbosTradeFetcher } from './TurbosTradeFetcher.js';
 import { TurbosTradeFormatter } from './TurbosTradeFormatter.js';
-import { APP_ENV, DISCORD, LOOP_DELAY, TURBOS } from './config.js';
+import { APP_ENV, DISCORD, LOOP_DELAY, TELEGRAM, TURBOS } from './config.js';
+import { BotTelegram } from './BotTelegram.js';
 
 /* Read API credentials */
 dotenv.config();
 const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN;
-if (!DISCORD_BOT_TOKEN) {
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+if (!DISCORD_BOT_TOKEN || !TELEGRAM_BOT_TOKEN) {
     throw new Error('Error: Missing required environment variables.');
 }
 
@@ -20,6 +22,7 @@ const turbosTradeFormatter = new TurbosTradeFormatter(
     TURBOS.DECIMALS_B
 );
 const botDiscord = new BotDiscord(DISCORD_BOT_TOKEN, DISCORD.CHANNEL_ID);
+const botTelegram = new BotTelegram(TELEGRAM_BOT_TOKEN, TELEGRAM.GROUP_ID, TELEGRAM.THREAD_ID);
 
 async function main() {
     // fetch new trade events
@@ -29,10 +32,13 @@ async function main() {
         if ( tradeEvent.amountB < TURBOS.MINIMUM_TRADE_SIZE_B * (10**TURBOS.DECIMALS_B) ) {
             continue;
         }
-        // post a message
+        // post a message // TODO: handle request errors, rate limits, etc
         const eventStr = turbosTradeFormatter.toString(tradeEvent);
         if (DISCORD.ENABLED) {
-            void botDiscord.sendMessage(eventStr); // TODO: handle rate limits
+            void botDiscord.sendMessage(eventStr);
+        }
+        if (TELEGRAM.ENABLED) {
+            void botTelegram.sendMessage(eventStr);
         }
         console.debug(eventStr);
     }

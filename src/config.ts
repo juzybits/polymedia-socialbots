@@ -3,7 +3,7 @@ const isProd = APP_ENV === 'prod';
 
 /**
  * Discord bot configuration.
- * This is for the FUD Discord - change the CHANNEL_ID below.
+ * This is for the Fud the Pug Discord - change the CHANNEL_ID below.
  */
 export const DISCORD = {
     /** The Discord channel where to send messages. */
@@ -11,7 +11,22 @@ export const DISCORD = {
     /** Enable/disable sending Discord messages. */
     ENABLED: isProd
         ? true  // prod
-        : false, // dev
+        : true, // dev
+};
+
+/**
+ * Telegram bot configuration.
+ * This is for the Fud the Pug Telegram - change the GROUP_ID and THREAD_ID below.
+ */
+export const TELEGRAM = {
+    /** The Telegram group where to send messages. */
+    GROUP_ID: isProd ? 'TODO' : '@testfudgroup',
+    /** The Telegram thread where to send messages. */
+    THREAD_ID: isProd ? 'TODO' : '3',
+    /** Enable/disable sending Telegram messages. */
+    ENABLED: isProd
+        ? true  // prod
+        : true, // dev
 };
 
 /**

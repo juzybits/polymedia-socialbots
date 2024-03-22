@@ -25,13 +25,13 @@ export class BotDiscord implements Bot
             });
 
             if (!response.ok) {
-                console.error('ERROR | response not ok | status:', response.status, '| response:', await response.json());
+                console.error('ERROR | Discord response not ok | status:', response.status, '| response:', await response.json());
                 return false;
             } else {
                 return true;
             }
         } catch (error) {
-            console.error('ERROR | request failed |', error);
+            console.error('ERROR | Discord request failed |', error);
             return false;
         }
     }

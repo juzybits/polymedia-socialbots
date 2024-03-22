@@ -23,7 +23,7 @@ export class TurbosTradeFormatter
         const emojis = emoji.repeat(emojiCount);
         return `
 ${emojis}
-**${trade.kind.toUpperCase()}**
+${trade.kind.toUpperCase()}
 ${this.tickerA}: ${formatNumber(amountA, 'compact')}
 ${this.tickerB}: ${formatNumber(amountB, 'compact')}
 Transaction: ${makeExplorerUrl('mainnet', 'txblock', trade.txn)}
