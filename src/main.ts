@@ -1,18 +1,13 @@
 import { sleep } from '@polymedia/suits';
 import dotenv from 'dotenv';
+import { BotAbstract } from './BotAbstract.js';
 import { BotDiscord } from './BotDiscord.js';
 import { BotTelegram } from './BotTelegram.js';
 import { TurbosTradeFetcher } from './TurbosTradeFetcher.js';
 import { TurbosTradeFormatter } from './TurbosTradeFormatter.js';
 import { APP_ENV, DISCORD, LOOP_DELAY, TELEGRAM, TURBOS } from './config.js';
 
-/* Read API credentials */
-dotenv.config();
-const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN;
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-if (!DISCORD_BOT_TOKEN || !TELEGRAM_BOT_TOKEN) {
-    throw new Error('Error: Missing required environment variables.');
-}
+/* Initialize Turbos */
 
 const turbosTradeFetcher = new TurbosTradeFetcher(TURBOS.POOL_ID, TURBOS.NEXT_CURSOR);
 const turbosTradeFormatter = new TurbosTradeFormatter(
@@ -21,29 +16,56 @@ const turbosTradeFormatter = new TurbosTradeFormatter(
     TURBOS.DECIMALS_A,
     TURBOS.DECIMALS_B
 );
-const botDiscord = new BotDiscord(DISCORD_BOT_TOKEN, DISCORD.CHANNEL_ID);
-const botTelegram = new BotTelegram(TELEGRAM_BOT_TOKEN, TELEGRAM.GROUP_ID, TELEGRAM.THREAD_ID);
 
-async function main() {
+/* Initialize bots */
+
+dotenv.config(); // read API credentials
+
+const bots: BotAbstract[] = [];
+
+if (DISCORD.ENABLED) {
+    const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN;
+    if (!DISCORD_BOT_TOKEN) {
+        throw new Error('Error: Missing DISCORD_BOT_TOKEN environment variable.');
+    }
+    const botDiscord = new BotDiscord(DISCORD_BOT_TOKEN, DISCORD.CHANNEL_ID);
+    bots.push(botDiscord);
+}
+
+if (TELEGRAM.ENABLED) {
+    const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+    if (!TELEGRAM_BOT_TOKEN) {
+        throw new Error('Error: Missing TELEGRAM_BOT_TOKEN environment variable.');
+    }
+    const botTelegram = new BotTelegram(TELEGRAM_BOT_TOKEN, TELEGRAM.GROUP_ID, TELEGRAM.THREAD_ID);
+    bots.push(botTelegram);
+}
+
+/* Main loop */
+
+async function main()
+{
     // fetch new trade events
     const tradeEvents = await turbosTradeFetcher.fetchTrades();
-    for (const tradeEvent of tradeEvents) {
+
+    for (const tradeEvent of tradeEvents)
+    {
         // skip small trades
-        if ( tradeEvent.amountB < TURBOS.MINIMUM_TRADE_SIZE_B * (10**TURBOS.DECIMALS_B) ) {
+        if (tradeEvent.amountB < TURBOS.MINIMUM_TRADE_SIZE_B * (10**TURBOS.DECIMALS_B)) {
             continue;
         }
-        // post a message // TODO: handle request errors, rate limits, etc
+
+        // format the trade event message
         const eventStr = turbosTradeFormatter.toString(tradeEvent);
-        if (DISCORD.ENABLED) {
-            void botDiscord.sendMessage(eventStr);
-        }
-        if (TELEGRAM.ENABLED) {
-            void botTelegram.sendMessage(eventStr);
-        }
         console.debug(eventStr);
+
+        // send the message through all bots in parallel
+        const promises = bots.map(bot => bot.sendMessage(eventStr));
+        await Promise.all(promises); // errors are handled by BotAbstract
     }
-    // console.debug(`(main) events.length: ${tradeEvents.length}\n`);
 }
+
+/* Start main loop */
 
 void (async () => {
     console.log(`Starting in ${APP_ENV} mode...`);
@@ -52,8 +74,3 @@ void (async () => {
         await sleep(LOOP_DELAY);
     }
 })();
-
-// TODO: https://api.dexscreener.com/latest/dex/pairs/sui/${TURBOS.POOL_ID}
-// - Show USD value of trade
-// - Show USD exchange rate
-// - Show FDV or market cap
