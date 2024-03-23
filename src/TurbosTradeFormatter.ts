@@ -1,5 +1,5 @@
 import { formatNumber, makeExplorerUrl } from '@polymedia/suits';
-import { TurbosTrade } from './types';
+import { TurbosTrade } from './TurbosTradeFetcher';
 
 export class TurbosTradeFormatter
 {

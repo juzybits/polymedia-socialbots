@@ -1,8 +1,20 @@
 import { EventId, SuiEvent } from '@mysten/sui.js/client';
 import { SuiEventFetcher } from '@polymedia/suits';
-import { TurbosTrade } from './types';
 
 const TURBOS_SWAP_EVENT = '0x91bfbc386a41afcfd9b2533058d7e915a1d3829089cc268ff4333d54d6339ca1::pool::SwapEvent';
+
+/**
+ * Selected Turbos swap event data.
+ */
+export type TurbosTrade = {
+    txn: string;
+    sender: string;
+    kind: 'buy'|'sell';
+    amountA: number;
+    amountB: number;
+    date: Date;
+}
+
 
 /**
  * The full Turbos swap event data in raw form.
