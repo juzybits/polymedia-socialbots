@@ -19,6 +19,7 @@
         "start-dev": "rm -rf dist/ && tsc && pm2 start pm2.config.cjs --env dev",
         "start-prod": "rm -rf dist/ && tsc && pm2 start pm2.config.cjs --env prod",
         "start-node": "rm -rf dist/ && tsc && node dist/main.js",
+        "stop": "pm2 stop socialbots",
         "build": "tsc",
         "clean": "rm -rf dist/ node_modules/",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"

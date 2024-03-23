@@ -15,18 +15,47 @@ export class TurbosTradeFormatter
         this.dividerB = 10 ** decimalsB;
     }
 
+    /* public methods */
+
     public toString(trade: TurbosTrade): string {
+        const { amountA, amountB, urlTxn, urlSender, emojis } = this.getMessageParts(trade);
+        return `
+${emojis}
+${trade.kind.toUpperCase()}
+${this.tickerA}: ${amountA}
+${this.tickerB}: ${amountB}
+Transaction: ${urlTxn}
+Sender: ${urlSender}`;
+    }
+
+    public toDiscordString(trade: TurbosTrade): string {
+        return this.toString(trade);
+    }
+
+    public toTelegramString(trade: TurbosTrade): string {
+        const { amountA, amountB, urlTxn, urlSender, emojis } = this.getMessageParts(trade);
+        return `
+${emojis}
+${trade.kind.toUpperCase()}
+${this.tickerA}: ${amountA}
+${this.tickerB}: ${amountB}
+<a href='${urlTxn}'>Transaction</a> | <a href='${urlSender}'>Sender</a>`;
+    }
+
+    /* private methods */
+
+    private getMessageParts(trade: TurbosTrade) {
         const amountA = trade.amountA / this.dividerA;
         const amountB = trade.amountB / this.dividerB;
         const emoji = trade.kind === 'buy' ? '🟢' : '🔴';
         const emojiCount = 1 + Math.floor(amountB / 1000); // 1 extra emoji for every 1000 units of amountB
         const emojis = emoji.repeat(emojiCount);
-        return `
-${emojis}
-${trade.kind.toUpperCase()}
-${this.tickerA}: ${formatNumber(amountA, 'compact')}
-${this.tickerB}: ${formatNumber(amountB, 'compact')}
-Transaction: ${makeExplorerUrl('mainnet', 'txblock', trade.txn)}
-Sender: ${makeExplorerUrl('mainnet', 'address', trade.sender)}`;
+        return {
+            amountA: formatNumber(amountA, 'compact'),
+            amountB: formatNumber(amountB, 'compact'),
+            urlTxn: makeExplorerUrl('mainnet', 'txblock', trade.txn),
+            urlSender: makeExplorerUrl('mainnet', 'address', trade.sender),
+            emojis,
+        };
     }
 }
