@@ -15,8 +15,6 @@ export class TurbosTradeFormatter
         this.dividerB = 10 ** decimalsB;
     }
 
-    /* public methods */
-
     public toString(trade: TurbosTrade): string {
         const { amountA, amountB, urlTxn, urlSender, emojis } = this.getMessageParts(trade);
         return `
@@ -24,25 +22,8 @@ ${emojis}
 ${trade.kind.toUpperCase()}
 ${this.tickerA}: ${amountA}
 ${this.tickerB}: ${amountB}
-Transaction: ${urlTxn}
-Sender: ${urlSender}`;
+[Transaction](${urlTxn}) | [Sender](${urlSender})`;
     }
-
-    public toDiscordString(trade: TurbosTrade): string {
-        return this.toString(trade);
-    }
-
-    public toTelegramString(trade: TurbosTrade): string {
-        const { amountA, amountB, urlTxn, urlSender, emojis } = this.getMessageParts(trade);
-        return `
-${emojis}
-${trade.kind.toUpperCase()}
-${this.tickerA}: ${amountA}
-${this.tickerB}: ${amountB}
-<a href='${urlTxn}'>Transaction</a> | <a href='${urlSender}'>Sender</a>`;
-    }
-
-    /* private methods */
 
     private getMessageParts(trade: TurbosTrade) {
         const amountA = trade.amountA / this.dividerA;

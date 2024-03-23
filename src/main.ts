@@ -55,22 +55,12 @@ async function main()
             continue;
         }
 
-        // log the trade event
+        // format the trade event message
         const eventStr = turbosTradeFormatter.toString(tradeEvent);
         console.debug(eventStr);
 
         // send the message through all bots in parallel
-        const promises = bots.map(bot => {
-            let message: string;
-            if (bot instanceof BotDiscord) {
-                message = turbosTradeFormatter.toDiscordString(tradeEvent);
-            } else if (bot instanceof BotTelegram) {
-                message = turbosTradeFormatter.toTelegramString(tradeEvent);
-            } else {
-                message = eventStr;
-            }
-            return bot.sendMessage(message)
-        });
+        const promises = bots.map(bot => bot.sendMessage(eventStr));
         await Promise.all(promises); // errors are handled by BotAbstract
     }
 }
