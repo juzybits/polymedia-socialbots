@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { BotAbstract } from './BotAbstract.js';
 import { BotDiscord } from './BotDiscord.js';
 import { BotTelegram } from './BotTelegram.js';
+import { PriceFetcher } from './PriceFetcher.js';
 import { TurbosTradeFetcher } from './TurbosTradeFetcher.js';
 import { TurbosTradeFormatter } from './TurbosTradeFormatter.js';
 import { APP_ENV, DISCORD, LOOP_DELAY, TELEGRAM, TURBOS } from './config.js';
@@ -41,10 +42,20 @@ if (TELEGRAM.ENABLED) {
     bots.push(botTelegram);
 }
 
+/* Initialize PriceFetcher */
+
+const priceFetcher = new PriceFetcher(TURBOS.POOL_ID);
+
 /* Main loop */
 
 async function main()
 {
+    // fetch USD price
+    const priceUsd = await priceFetcher.fetchPriceUsd();
+    if (!priceUsd) {
+        return;
+    }
+
     // fetch new trade events
     const tradeEvents = await turbosTradeFetcher.fetchTrades();
 
@@ -56,7 +67,7 @@ async function main()
         }
 
         // format the trade event message
-        const eventStr = turbosTradeFormatter.toString(tradeEvent);
+        const eventStr = turbosTradeFormatter.toString(tradeEvent, priceUsd);
         console.debug(eventStr);
 
         // send the message through all bots in parallel

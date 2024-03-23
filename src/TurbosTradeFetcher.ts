@@ -15,7 +15,6 @@ export type TurbosTrade = {
     date: Date;
 }
 
-
 /**
  * The full Turbos swap event data in raw form.
  */

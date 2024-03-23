@@ -15,25 +15,28 @@ export class TurbosTradeFormatter
         this.dividerB = 10 ** decimalsB;
     }
 
-    public toString(trade: TurbosTrade): string {
-        const { amountA, amountB, urlTxn, urlSender, emojis } = this.getMessageParts(trade);
+    public toString(trade: TurbosTrade, priceUsd: number): string {
+        const { amountA, amountB, amountUsd, urlTxn, urlSender, emojis } = this.getMessageParts(trade, priceUsd);
         return `
 ${emojis}
-${trade.kind.toUpperCase()}
-${this.tickerA}: ${amountA}
+*${trade.kind.toUpperCase()} $${amountUsd}*
 ${this.tickerB}: ${amountB}
-[Transaction](${urlTxn}) | [Sender](${urlSender})`;
+${this.tickerA}: ${amountA}
+${this.tickerA}/USD: ${formatNumber(priceUsd)}
+[Sender](${urlSender}) | [Transaction](${urlTxn})`;
     }
 
-    private getMessageParts(trade: TurbosTrade) {
+    private getMessageParts(trade: TurbosTrade, priceUsd: number) {
         const amountA = trade.amountA / this.dividerA;
         const amountB = trade.amountB / this.dividerB;
+        const amountUsd = amountA * priceUsd;
         const emoji = trade.kind === 'buy' ? '🟢' : '🔴';
-        const emojiCount = 1 + Math.floor(amountB / 1000); // 1 extra emoji for every 1000 units of amountB
+        const emojiCount = Math.max(1, Math.floor(amountUsd / 1000));
         const emojis = emoji.repeat(emojiCount);
         return {
             amountA: formatNumber(amountA, 'compact'),
             amountB: formatNumber(amountB, 'compact'),
+            amountUsd: formatNumber(amountUsd),
             urlTxn: makeExplorerUrl('mainnet', 'txblock', trade.txn),
             urlSender: makeExplorerUrl('mainnet', 'address', trade.sender),
             emojis,
