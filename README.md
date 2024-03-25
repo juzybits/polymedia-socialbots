@@ -1,10 +1,10 @@
 # Polymedia SocialBots
 
-Fetch Sui onchain events and post messages to social media.
+Fetch Sui trade events and post messages to social media.
 
 ![Polymedia SocialBots](https://assets.polymedia.app/img/socialbots/open-graph.webp?x=1)
 
-It monitors trades on Turbos Finance and posts messages to Discord and Telegram, but can be extended to support other onchain events and social media platforms.
+It monitors trades on Turbos Finance and posts messages to Discord and Telegram, but can easily be extended to support other DEXs and social media platforms.
 
 ## Bot setup
 
@@ -52,24 +52,24 @@ src/config.ts
 ## Usage
 
 ```bash
-# start the app
+# start the bot
 pnpm start-dev  # development, runs with 'pm2'
 pnpm start-node # development, runs with 'node'
 pnpm start-prod # production,  runs with 'pm2'
 
-# check if the app is running
+# check if the bot is running
 pm2 ls
 
 # check app logs
-pm2 logs socialbots
+pm2 log socialbots
 
-# stop the app
+# stop the bot
 pm2 stop socialbots
 ```
 
 ## Server setup
 
-Here is how you can provision an Ubuntu server and keep the app running.
+Here is how you can provision an Ubuntu server and keep the bot running.
 
 ```bash
 # Access your server
@@ -84,10 +84,10 @@ sudo apt install nodejs npm -y
 
 # Follow the steps in the 'Installation' section
 
-# Start the app
+# Start the bot
 pnpm start-prod
 
-# Set up pm2 to restart the app on server reboots
+# Set up pm2 to restart the bot on server reboots
 pm2 startup
 
 # Save the pm2 process list

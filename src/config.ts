@@ -7,7 +7,7 @@ const isProd = APP_ENV === 'prod';
  */
 export const DISCORD = {
     /** The Discord channel where to send messages. */
-    CHANNEL_ID: isProd ? '1199365779708190800' : '1197639273864777798',
+    CHANNEL_ID: isProd ? '1221871606142337094' : '1197639273864777798',
     /** Enable/disable sending Discord messages. */
     ENABLED: isProd
         ? true  // prod
@@ -56,4 +56,4 @@ export const TURBOS = {
 /**
  * How long to delay between executions in the main script
  */
-export const LOOP_DELAY = 6_000;
+export const LOOP_DELAY = 8_000;
