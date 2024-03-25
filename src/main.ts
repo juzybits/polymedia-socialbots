@@ -50,14 +50,17 @@ const priceFetcher = new PriceFetcher(TURBOS.POOL_ID);
 
 async function main()
 {
+    // fetch new trade events
+    const tradeEvents = await turbosTradeFetcher.fetchTrades();
+    if (tradeEvents.length === 0) {
+        return;
+    }
+
     // fetch USD price
     const priceUsd = await priceFetcher.fetchPriceUsd();
     if (!priceUsd) {
         return;
     }
-
-    // fetch new trade events
-    const tradeEvents = await turbosTradeFetcher.fetchTrades();
 
     for (const tradeEvent of tradeEvents)
     {
