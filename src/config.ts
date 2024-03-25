@@ -56,4 +56,4 @@ export const TURBOS = {
 /**
  * How long to delay between executions in the main script
  */
-export const LOOP_DELAY = 5_000;
+export const LOOP_DELAY = 6_000;
