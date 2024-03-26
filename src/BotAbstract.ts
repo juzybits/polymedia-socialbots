@@ -1,11 +1,18 @@
+import { EnabledStatus } from './config.js';
+
 /**
  * A social media client who can post a message (Discord, Telegram, Twitter).
  */
 export abstract class BotAbstract
 {
+    protected abstract enabledStatus: EnabledStatus;
     protected abstract getSendMessageUrl(): string;
     protected abstract getHeaders(): HeadersInit;
     protected abstract getBody(message: string): BodyInit;
+
+    public getEnabledStatus(): EnabledStatus {
+        return this.enabledStatus;
+    }
 
     public async sendMessage(message: string): Promise<boolean> {
         try {

@@ -1,14 +1,17 @@
 import { BotAbstract } from './BotAbstract.js';
+import { DiscordConfig, EnabledStatus } from './config.js';
 
 export class BotDiscord extends BotAbstract
 {
+    protected enabledStatus: EnabledStatus;
     private botToken: string;
     private channelId: string;
 
-    constructor(botToken: string, channelId: string) {
+    constructor(botToken: string, config: DiscordConfig) {
         super();
         this.botToken = botToken;
-        this.channelId = channelId;
+        this.channelId = config.CHANNEL_ID;
+        this.enabledStatus = config.ENABLED;
     }
 
     protected getSendMessageUrl(): string {

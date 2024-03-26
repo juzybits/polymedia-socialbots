@@ -1,5 +1,6 @@
 import { formatNumber, makeExplorerUrl } from '@polymedia/suits';
-import { TurbosTrade } from './TurbosTradeFetcher';
+import { TurbosTrade } from './TurbosTradeFetcher.js';
+import { TurbosConfig } from './config.js';
 
 export class TurbosTradeFormatter
 {
@@ -8,11 +9,11 @@ export class TurbosTradeFormatter
     private dividerA: number;
     private dividerB: number;
 
-    constructor(tickerA: string, tickerB: string, decimalsA: number, decimalsB: number) {
-        this.tickerA = tickerA;
-        this.tickerB = tickerB;
-        this.dividerA = 10 ** decimalsA;
-        this.dividerB = 10 ** decimalsB;
+    constructor(config: TurbosConfig) {
+        this.tickerA =  config.TICKER_A;
+        this.tickerB =  config.TICKER_B;
+        this.dividerA =  10 ** config.DECIMALS_A;
+        this.dividerB =  10 ** config.DECIMALS_B;
     }
 
     public toString(trade: TurbosTrade, priceUsd: number): string {

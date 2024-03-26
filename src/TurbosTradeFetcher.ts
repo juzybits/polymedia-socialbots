@@ -1,5 +1,6 @@
-import { EventId, SuiEvent } from '@mysten/sui.js/client';
+import { SuiEvent } from '@mysten/sui.js/client';
 import { SuiEventFetcher } from '@polymedia/suits';
+import { TurbosConfig } from './config.js';
 
 const TURBOS_SWAP_EVENT = '0x91bfbc386a41afcfd9b2533058d7e915a1d3829089cc268ff4333d54d6339ca1::pool::SwapEvent';
 
@@ -41,12 +42,12 @@ export class TurbosTradeFetcher {
     private poolId: string;
     private suiEventFetcher: SuiEventFetcher<TurbosTrade>;
 
-    constructor(poolId: string, nextCursor: EventId|null = null) {
-        this.poolId = poolId;
+    constructor(config: TurbosConfig) {
+        this.poolId = config.POOL_ID;
         this.suiEventFetcher = new SuiEventFetcher<TurbosTrade>(
             TURBOS_SWAP_EVENT,
             this.parseTurbosEvent.bind(this),
-            nextCursor
+            config.NEXT_CURSOR,
         );
     }
 

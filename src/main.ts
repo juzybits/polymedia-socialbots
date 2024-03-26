@@ -6,17 +6,12 @@ import { BotTelegram } from './BotTelegram.js';
 import { PriceFetcher } from './PriceFetcher.js';
 import { TurbosTradeFetcher } from './TurbosTradeFetcher.js';
 import { TurbosTradeFormatter } from './TurbosTradeFormatter.js';
-import { APP_ENV, DISCORD, LOOP_DELAY, TELEGRAM, TURBOS } from './config.js';
+import { APP_ENV, DISCORD_CONFIG, LOOP_DELAY, TELEGRAM_CONFIG, TURBOS_CONFIG } from './config.js';
 
 /* Initialize Turbos */
 
-const turbosTradeFetcher = new TurbosTradeFetcher(TURBOS.POOL_ID, TURBOS.NEXT_CURSOR);
-const turbosTradeFormatter = new TurbosTradeFormatter(
-    TURBOS.TICKER_A,
-    TURBOS.TICKER_B,
-    TURBOS.DECIMALS_A,
-    TURBOS.DECIMALS_B
-);
+const turbosTradeFetcher = new TurbosTradeFetcher(TURBOS_CONFIG);
+const turbosTradeFormatter = new TurbosTradeFormatter(TURBOS_CONFIG);
 
 /* Initialize bots */
 
@@ -24,27 +19,27 @@ dotenv.config(); // read API credentials
 
 const bots: BotAbstract[] = [];
 
-if (DISCORD.ENABLED) {
+if (DISCORD_CONFIG.ENABLED !== 'none') {
     const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN;
     if (!DISCORD_BOT_TOKEN) {
         throw new Error('Error: Missing DISCORD_BOT_TOKEN environment variable.');
     }
-    const botDiscord = new BotDiscord(DISCORD_BOT_TOKEN, DISCORD.CHANNEL_ID);
+    const botDiscord = new BotDiscord(DISCORD_BOT_TOKEN, DISCORD_CONFIG);
     bots.push(botDiscord);
 }
 
-if (TELEGRAM.ENABLED) {
+if (TELEGRAM_CONFIG.ENABLED !== 'none') {
     const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
     if (!TELEGRAM_BOT_TOKEN) {
         throw new Error('Error: Missing TELEGRAM_BOT_TOKEN environment variable.');
     }
-    const botTelegram = new BotTelegram(TELEGRAM_BOT_TOKEN, TELEGRAM.GROUP_ID, TELEGRAM.THREAD_ID);
+    const botTelegram = new BotTelegram(TELEGRAM_BOT_TOKEN, TELEGRAM_CONFIG);
     bots.push(botTelegram);
 }
 
 /* Initialize PriceFetcher */
 
-const priceFetcher = new PriceFetcher(TURBOS.POOL_ID);
+const priceFetcher = new PriceFetcher(TURBOS_CONFIG.POOL_ID);
 
 /* Main loop */
 
@@ -65,7 +60,7 @@ async function main()
     for (const tradeEvent of tradeEvents)
     {
         // skip small trades
-        if (tradeEvent.amountB < TURBOS.MINIMUM_TRADE_SIZE_B * (10**TURBOS.DECIMALS_B)) {
+        if (tradeEvent.amountB < TURBOS_CONFIG.MINIMUM_TRADE_SIZE_B * (10**TURBOS_CONFIG.DECIMALS_B)) {
             continue;
         }
 
@@ -74,7 +69,16 @@ async function main()
         console.debug(eventStr);
 
         // send the message through all bots in parallel
-        const promises = bots.map(bot => bot.sendMessage(eventStr));
+        const promises = bots
+            .filter(bot => {
+                const enabled = bot.getEnabledStatus();
+                return enabled === 'all'
+                    || (enabled === 'buys' && tradeEvent.kind === 'buy')
+                    || (enabled === 'sells' && tradeEvent.kind === 'sell');
+            })
+            .map(bot => {
+                return bot.sendMessage(eventStr);
+            });
         await Promise.all(promises); // errors are handled by BotAbstract
     }
 }
