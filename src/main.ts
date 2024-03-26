@@ -60,7 +60,10 @@ async function main()
     for (const tradeEvent of tradeEvents)
     {
         // skip small trades
-        if (tradeEvent.amountB < TURBOS_CONFIG.MINIMUM_TRADE_SIZE_B * (10**TURBOS_CONFIG.DECIMALS_B)) {
+        const minB = TURBOS_CONFIG.MINIMUM_TRADE_SIZE_B;
+        const minBScaled = minB * (10**TURBOS_CONFIG.DECIMALS_B);
+        const isSmallTrade = (minB > 0) && (tradeEvent.amountB < minBScaled);
+        if (isSmallTrade) {
             continue;
         }
 
