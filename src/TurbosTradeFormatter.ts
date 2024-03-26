@@ -32,7 +32,7 @@ ${this.tickerA}/USD: ${formatNumber(priceUsd)}
         const amountB = trade.amountB / this.dividerB;
         const amountUsd = amountA * priceUsd;
         const emoji = trade.kind === 'buy' ? '🟢' : '🔴';
-        const emojiCount = Math.max(1, Math.floor(amountUsd / 1000));
+        const emojiCount = Math.max(1, Math.floor(amountUsd / 500));
         const emojis = emoji.repeat(emojiCount);
         return {
             amountA: formatNumber(amountA, 'compact'),
