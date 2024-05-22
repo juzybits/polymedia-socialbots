@@ -1,4 +1,4 @@
-import { SuiEvent } from '@mysten/sui.js/client';
+import { SuiClient, SuiEvent } from '@mysten/sui.js/client';
 import { SuiEventFetcher } from '@polymedia/suits';
 import { TurbosConfig } from './config.js';
 
@@ -42,9 +42,10 @@ export class TurbosTradeFetcher {
     private poolId: string;
     private suiEventFetcher: SuiEventFetcher<TurbosTrade>;
 
-    constructor(config: TurbosConfig) {
+    constructor(suiClient: SuiClient, config: TurbosConfig) {
         this.poolId = config.POOL_ID;
         this.suiEventFetcher = new SuiEventFetcher<TurbosTrade>(
+            suiClient,
             TURBOS_SWAP_EVENT,
             this.parseTurbosEvent.bind(this),
             config.NEXT_CURSOR,

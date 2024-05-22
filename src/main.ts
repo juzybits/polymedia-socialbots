@@ -1,3 +1,4 @@
+import { SuiClient, getFullnodeUrl } from "@mysten/sui.js/client";
 import { sleep } from '@polymedia/suits';
 import dotenv from 'dotenv';
 import { BotAbstract } from './BotAbstract.js';
@@ -10,7 +11,8 @@ import { APP_ENV, DISCORD_CONFIG, LOOP_DELAY, TELEGRAM_CONFIG, TURBOS_CONFIG } f
 
 /* Initialize Turbos */
 
-const turbosTradeFetcher = new TurbosTradeFetcher(TURBOS_CONFIG);
+const suiClient = new SuiClient({ url: getFullnodeUrl('mainnet')});
+const turbosTradeFetcher = new TurbosTradeFetcher(suiClient, TURBOS_CONFIG);
 const turbosTradeFormatter = new TurbosTradeFormatter(TURBOS_CONFIG);
 
 /* Initialize bots */
