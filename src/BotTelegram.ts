@@ -1,5 +1,5 @@
-import { BotAbstract } from './BotAbstract.js';
-import { EnabledStatus, TelegramConfig } from './config.js';
+import { BotAbstract } from "./BotAbstract.js";
+import { EnabledStatus, TelegramConfig } from "./config.js";
 
 export class BotTelegram extends BotAbstract
 {
@@ -22,7 +22,7 @@ export class BotTelegram extends BotAbstract
 
     protected getHeaders(): HeadersInit {
         return {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
         };
     }
 
@@ -31,7 +31,7 @@ export class BotTelegram extends BotAbstract
             chat_id: this.groupId,
             text: message,
             message_thread_id: this.threadId,
-            parse_mode: 'Markdown',
+            parse_mode: "Markdown",
             link_preview_options: {
                 is_disabled: true,
             }

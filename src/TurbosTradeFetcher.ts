@@ -1,8 +1,8 @@
-import { SuiClient, SuiEvent } from '@mysten/sui.js/client';
-import { SuiEventFetcher } from '@polymedia/suits';
-import { TurbosConfig } from './config.js';
+import { SuiClient, SuiEvent } from "@mysten/sui.js/client";
+import { SuiEventFetcher } from "@polymedia/suits";
+import { TurbosConfig } from "./config.js";
 
-const TURBOS_SWAP_EVENT = '0x91bfbc386a41afcfd9b2533058d7e915a1d3829089cc268ff4333d54d6339ca1::pool::SwapEvent';
+const TURBOS_SWAP_EVENT = "0x91bfbc386a41afcfd9b2533058d7e915a1d3829089cc268ff4333d54d6339ca1::pool::SwapEvent";
 
 /**
  * Selected Turbos swap event data.
@@ -10,11 +10,11 @@ const TURBOS_SWAP_EVENT = '0x91bfbc386a41afcfd9b2533058d7e915a1d3829089cc268ff43
 export type TurbosTrade = {
     txn: string;
     sender: string;
-    kind: 'buy'|'sell';
+    kind: "buy"|"sell";
     amountA: number;
     amountB: number;
     date: Date;
-}
+};
 
 /**
  * The full Turbos swap event data in raw form.
@@ -32,7 +32,7 @@ type TurbosSwapEventData = {
     sqrt_price: string;
     tick_current_index: { bits: string };
     tick_pre_index: { bits: string };
-}
+};
 
 /**
  * Fetch the latest Turbos trades for a given pool.
@@ -68,7 +68,7 @@ export class TurbosTradeFetcher {
         const trade: TurbosTrade =  {
             txn: suiEvent.id.txDigest,
             sender: suiEvent.sender,
-            kind: turbosEventData.a_to_b ? 'sell' : 'buy',
+            kind: turbosEventData.a_to_b ? "sell" : "buy",
             amountA: Number(turbosEventData.amount_a),
             amountB: Number(turbosEventData.amount_b),
             date: new Date(Number(suiEvent.timestampMs)),

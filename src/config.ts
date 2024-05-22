@@ -1,5 +1,5 @@
-export const APP_ENV = process.env.NODE_ENV === 'prod' ? 'prod' : 'dev';
-const isProd = APP_ENV === 'prod';
+export const APP_ENV = process.env.NODE_ENV === "prod" ? "prod" : "dev";
+const isProd = APP_ENV === "prod";
 
 /** How long to delay between executions in the main script */
 export const LOOP_DELAY = 8_000;
@@ -10,11 +10,11 @@ export const LOOP_DELAY = 8_000;
  */
 export const DISCORD_CONFIG: DiscordConfig = {
     /** The Discord channel where to send messages. */
-    CHANNEL_ID: isProd ? '1221871606142337094' : '1197639273864777798',
+    CHANNEL_ID: isProd ? "1221871606142337094" : "1197639273864777798",
     /** Enable/disable sending Discord messages. */
     ENABLED: isProd
-        ? 'all'  // prod
-        : 'all', // dev
+        ? "all"  // prod
+        : "all", // dev
 };
 
 /**
@@ -23,13 +23,13 @@ export const DISCORD_CONFIG: DiscordConfig = {
  */
 export const TELEGRAM_CONFIG: TelegramConfig = {
     /** The Telegram group where to send messages. */
-    GROUP_ID: isProd ? '@fudthepug' : '@testfudgroup',
+    GROUP_ID: isProd ? "@fudthepug" : "@testfudgroup",
     /** (optional) The Telegram thread where to send messages. */
-    THREAD_ID: isProd ? null : '3',
+    THREAD_ID: isProd ? null : "3",
     /** Enable/disable sending Telegram messages. */
     ENABLED: isProd
-        ? 'buys'  // prod
-        : 'buys', // dev
+        ? "buys"  // prod
+        : "buys", // dev
 };
 
 /**
@@ -38,11 +38,11 @@ export const TELEGRAM_CONFIG: TelegramConfig = {
  */
 export const TURBOS_CONFIG: TurbosConfig = {
     /** The Turbos Finance pool we want to watch. */
-    POOL_ID: '0xbd85f61a1b755b6034c62f16938d6da7c85941705d9d10aa1843b809b0e35582', // FUD/SUI
+    POOL_ID: "0xbd85f61a1b755b6034c62f16938d6da7c85941705d9d10aa1843b809b0e35582", // FUD/SUI
     /** The 1st pair in the pool. */
-    TICKER_A: 'FUD',
+    TICKER_A: "FUD",
     /** The 2nd pair in the pool. */
-    TICKER_B: 'SUI',
+    TICKER_B: "SUI",
     /** The amount of decimals for the 1st pair in the pool. */
     DECIMALS_A: 5,
     /** The amount of decimals for the 2nd pair in the pool. */
@@ -58,7 +58,7 @@ export const TURBOS_CONFIG: TurbosConfig = {
 
 /* Types */
 
-export type EnabledStatus = 'all' | 'none' | 'buys' | 'sells';
+export type EnabledStatus = "all" | "none" | "buys" | "sells";
 
 export type DiscordConfig = {
     CHANNEL_ID: string;
@@ -69,7 +69,7 @@ export type TelegramConfig = {
     GROUP_ID: string;
     THREAD_ID: string|null;
     ENABLED: EnabledStatus;
-}
+};
 
 export type TurbosConfig = {
     POOL_ID: string;

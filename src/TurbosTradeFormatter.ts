@@ -1,6 +1,6 @@
-import { formatNumber, makeExplorerUrl } from '@polymedia/suits';
-import { TurbosTrade } from './TurbosTradeFetcher.js';
-import { TurbosConfig } from './config.js';
+import { formatNumber, makeExplorerUrl } from "@polymedia/suits";
+import { TurbosTrade } from "./TurbosTradeFetcher.js";
+import { TurbosConfig } from "./config.js";
 
 export class TurbosTradeFormatter
 {
@@ -31,15 +31,15 @@ ${this.tickerA}/USD: ${formatNumber(priceUsd)}
         const amountA = trade.amountA / this.dividerA;
         const amountB = trade.amountB / this.dividerB;
         const amountUsd = amountA * priceUsd;
-        const emoji = trade.kind === 'buy' ? '🟢' : '🔴';
+        const emoji = trade.kind === "buy" ? "🟢" : "🔴";
         const emojiCount = Math.max(1, Math.floor(amountUsd / 200));
         const emojis = emoji.repeat(emojiCount);
         return {
-            amountA: formatNumber(amountA, 'compact'),
-            amountB: formatNumber(amountB, 'compact'),
+            amountA: formatNumber(amountA, "compact"),
+            amountB: formatNumber(amountB, "compact"),
             amountUsd: formatNumber(amountUsd),
-            urlTxn: makeExplorerUrl('mainnet', 'txblock', trade.txn),
-            urlSender: makeExplorerUrl('mainnet', 'address', trade.sender),
+            urlTxn: makeExplorerUrl("mainnet", "txblock", trade.txn),
+            urlSender: makeExplorerUrl("mainnet", "address", trade.sender),
             emojis,
         };
     }

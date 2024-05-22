@@ -1,5 +1,5 @@
-import { BotAbstract } from './BotAbstract.js';
-import { DiscordConfig, EnabledStatus } from './config.js';
+import { BotAbstract } from "./BotAbstract.js";
+import { DiscordConfig, EnabledStatus } from "./config.js";
 
 export class BotDiscord extends BotAbstract
 {
@@ -20,8 +20,8 @@ export class BotDiscord extends BotAbstract
 
     protected getHeaders(): HeadersInit {
         return {
-            'Authorization': `Bot ${this.botToken}`,
-            'Content-Type': 'application/json',
+            "Authorization": `Bot ${this.botToken}`,
+            "Content-Type": "application/json",
         };
     }
 
