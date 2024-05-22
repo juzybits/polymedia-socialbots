@@ -2,7 +2,7 @@
 
 Fetch Sui trade events and post messages to social media.
 
-![Polymedia SocialBots](https://assets.polymedia.app/img/socialbots/open-graph.webp?x=1)
+![Polymedia SocialBots](https://assets.polymedia.app/img/socialbots/open-graph.webp)
 
 It monitors trades on Turbos Finance and posts messages to Discord and Telegram, but can easily be extended to support other DEXs and social media platforms.
 

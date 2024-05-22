@@ -16,25 +16,26 @@
         "bots"
     ],
     "scripts": {
-        "start-dev": "rm -rf dist/ && tsc && pm2 start pm2.config.cjs --env dev",
-        "start-prod": "rm -rf dist/ && tsc && pm2 start pm2.config.cjs --env prod",
-        "start-node": "rm -rf dist/ && tsc && node dist/main.js",
-        "stop": "pm2 stop socialbots",
         "build": "tsc",
         "clean": "rm -rf dist/ node_modules/",
-        "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+        "lint": "eslint src/ --report-unused-disable-directives --max-warnings 0",
+        "start-dev": "rm -rf dist/ && tsc && pm2 start pm2.config.cjs --env dev",
+        "start-node": "rm -rf dist/ && tsc && node dist/main.js",
+        "start-prod": "rm -rf dist/ && tsc && pm2 start pm2.config.cjs --env prod",
+        "stop": "pm2 stop socialbots"
     },
     "dependencies": {
-        "@mysten/sui.js": "^0.51.0",
-        "@polymedia/suits": "^0.0.37",
+        "@mysten/sui.js": "^0.54.1",
+        "@polymedia/suits": "^0.0.42",
         "dotenv": "^16.4.5"
     },
     "devDependencies": {
-        "@types/node": "^20.11.30",
-        "@typescript-eslint/eslint-plugin": "^7.3.1",
-        "@typescript-eslint/parser": "^7.3.1",
-        "eslint": "^8.57.0",
-        "typescript": "^5.4.2"
+        "@eslint/js": "^9.3.0",
+        "@stylistic/eslint-plugin": "^2.1.0",
+        "@types/node": "^20.12.12",
+        "eslint": "^9.3.0",
+        "typescript": "^5.4.5",
+        "typescript-eslint": "^7.10.0"
     },
     "type": "module",
     "sideEffects": false
