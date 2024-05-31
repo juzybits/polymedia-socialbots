@@ -1,4 +1,4 @@
-import { formatNumber, makeExplorerUrl } from "@polymedia/suits";
+import { formatNumber, makePolymediaUrl } from "@polymedia/suitcase-core";
 import { TurbosTrade } from "./TurbosTradeFetcher.js";
 import { TurbosConfig } from "./config.js";
 
@@ -38,8 +38,8 @@ ${this.tickerA}/USD: ${formatNumber(priceUsd)}
             amountA: formatNumber(amountA, "compact"),
             amountB: formatNumber(amountB, "compact"),
             amountUsd: formatNumber(amountUsd),
-            urlTxn: makeExplorerUrl("mainnet", "txblock", trade.txn),
-            urlSender: makeExplorerUrl("mainnet", "address", trade.sender),
+            urlTxn: makePolymediaUrl("mainnet", "txblock", trade.txn),
+            urlSender: makePolymediaUrl("mainnet", "address", trade.sender),
             emojis,
         };
     }

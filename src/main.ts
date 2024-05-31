@@ -1,5 +1,5 @@
-import { SuiClient, getFullnodeUrl } from "@mysten/sui.js/client";
-import { sleep } from "@polymedia/suits";
+import { SuiClient, getFullnodeUrl } from "@mysten/sui/client";
+import { sleep } from "@polymedia/suitcase-core";
 import dotenv from "dotenv";
 import { BotAbstract } from "./BotAbstract.js";
 import { BotDiscord } from "./BotDiscord.js";
@@ -92,7 +92,7 @@ async function main()
 
 void (async () => {
     console.log(`Starting in ${APP_ENV} mode with: ${bots.map(bot => bot.constructor.name).join(", ")}`);
-    while (true) {  
+    while (true) {
         await main();
         await sleep(LOOP_DELAY);
     }

@@ -1,5 +1,5 @@
-import { SuiClient, SuiEvent } from "@mysten/sui.js/client";
-import { SuiEventFetcher } from "@polymedia/suits";
+import { SuiClient, SuiEvent } from "@mysten/sui/client";
+import { SuiEventFetcher } from "@polymedia/suitcase-core";
 import { TurbosConfig } from "./config.js";
 
 const TURBOS_SWAP_EVENT = "0x91bfbc386a41afcfd9b2533058d7e915a1d3829089cc268ff4333d54d6339ca1::pool::SwapEvent";

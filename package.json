@@ -17,7 +17,7 @@
     ],
     "scripts": {
         "build": "tsc",
-        "clean": "rm -rf dist/ node_modules/",
+        "clean": "rm -rf dist/ node_modules/ .turbo/ .wrangler/",
         "lint": "eslint src/ --report-unused-disable-directives --max-warnings 0",
         "start-dev": "rm -rf dist/ && tsc && pm2 start pm2.config.cjs --env dev",
         "start-node": "rm -rf dist/ && tsc && node dist/main.js",
@@ -25,17 +25,17 @@
         "stop": "pm2 stop socialbots"
     },
     "dependencies": {
-        "@mysten/sui.js": "^0.54.1",
-        "@polymedia/suits": "^0.0.42",
+        "@mysten/sui": "^1.0.3",
+        "@polymedia/suitcase-core": "^0.0.6",
         "dotenv": "^16.4.5"
     },
     "devDependencies": {
         "@eslint/js": "^9.3.0",
         "@stylistic/eslint-plugin": "^2.1.0",
-        "@types/node": "^20.12.12",
+        "@types/node": "^20.12.13",
         "eslint": "^9.3.0",
         "typescript": "^5.4.5",
-        "typescript-eslint": "^7.10.0"
+        "typescript-eslint": "^7.11.0"
     },
     "type": "module",
     "sideEffects": false
