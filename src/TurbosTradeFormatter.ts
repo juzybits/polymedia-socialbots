@@ -27,13 +27,21 @@ ${this.tickerA}/USD: ${formatNumber(priceUsd)}
 [Sender](${urlSender}) | [Transaction](${urlTxn})`;
     }
 
-    private getMessageParts(trade: TurbosTrade, priceUsd: number) {
+    private getMessageParts(trade: TurbosTrade, priceUsd: number)
+    {
         const amountA = trade.amountA / this.dividerA;
         const amountB = trade.amountB / this.dividerB;
         const amountUsd = amountA * priceUsd;
+
+        const minEmojis = 1;
+        const maxEmojis = 180;
+        const usdPerEmoji = 200;
+        const rawEmojiCount = Math.floor(amountUsd / usdPerEmoji);
+        const emojiCount = Math.min(maxEmojis, Math.max(minEmojis, rawEmojiCount));
+
         const emoji = trade.kind === "buy" ? "🟢" : "🔴";
-        const emojiCount = Math.max(1, Math.floor(amountUsd / 200));
         const emojis = emoji.repeat(emojiCount);
+
         return {
             amountA: formatNumber(amountA, "compact"),
             amountB: formatNumber(amountB, "compact"),
