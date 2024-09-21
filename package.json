@@ -18,7 +18,9 @@
     "scripts": {
         "build": "tsc",
         "clean": "rm -rf dist/ node_modules/ .turbo/ .wrangler/",
+        "dev": "tsc --watch",
         "lint": "eslint src/ --report-unused-disable-directives --max-warnings 0",
+        "typecheck": "tsc -b",
         "start-dev": "rm -rf dist/ && tsc && pm2 start pm2.config.cjs --env dev",
         "start-node": "rm -rf dist/ && tsc && node dist/main.js",
         "start-prod": "rm -rf dist/ && tsc && pm2 start pm2.config.cjs --env prod",
